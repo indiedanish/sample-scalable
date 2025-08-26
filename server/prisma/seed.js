@@ -25,7 +25,7 @@ async function main() {
     // Create admin user
     const adminUser = await prisma.user.create({
       data: {
-        email: "admin@videohub.com",
+        email: "admin@gmail.com",
         password: hashedPassword,
         firstName: "Admin",
         lastName: "User",
