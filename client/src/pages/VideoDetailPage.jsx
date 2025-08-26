@@ -15,8 +15,6 @@ import {
 import { canEditVideo } from "@/lib/auth";
 import { formatDate, formatDuration, formatFileSize } from "@/lib/utils";
 import { VideoPlayer } from "@/features/videos/components/VideoPlayer";
-import { CommentsSection } from "@/features/videos/components/CommentsSection";
-import { RatingsSection } from "@/features/videos/components/RatingsSection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +31,10 @@ import {
   ArrowLeft,
   MessageCircle,
   ThumbsUp,
+  Sparkles,
+  Zap,
+  Heart,
+  Share2,
 } from "lucide-react";
 
 export function VideoDetailPage() {
@@ -195,7 +197,10 @@ export function VideoDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="relative">
+          <div className="w-16 h-16 border-4 border-purple-200 rounded-full animate-spin"></div>
+          <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-purple-500 rounded-full animate-spin"></div>
+        </div>
       </div>
     );
   }
@@ -203,16 +208,22 @@ export function VideoDetailPage() {
   if (error || !video) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <div className="text-red-500 mb-4">
-              <Play className="h-12 w-12" />
+        <Card className="bg-gradient-to-br from-red-50 to-pink-50 border-0 shadow-xl">
+          <CardContent className="flex flex-col items-center justify-center py-16">
+            <div className="relative mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-red-200 to-pink-200 rounded-3xl flex items-center justify-center">
+                <Play className="h-10 w-10 text-red-600" />
+              </div>
+              <div className="absolute -inset-2 bg-gradient-to-br from-red-200 to-pink-200 rounded-3xl blur opacity-50"></div>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">
               Video not found
             </h3>
-            <p className="text-gray-500 text-center mb-4">{error}</p>
-            <Button onClick={() => navigate("/videos")}>
+            <p className="text-gray-600 text-center mb-6 max-w-md">{error}</p>
+            <Button 
+              onClick={() => navigate("/videos")}
+              className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Videos
             </Button>
@@ -225,75 +236,97 @@ export function VideoDetailPage() {
   const canEdit = canEditVideo(video);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Back button */}
-      <div className="mb-6">
+      <div className="mb-8">
         <Button
           variant="outline"
           onClick={() => navigate("/videos")}
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm hover:bg-white border-purple-200 hover:border-purple-300 text-purple-700 hover:text-purple-800 rounded-xl px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-200"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Back to Videos</span>
+          <span className="font-semibold">Back to Videos</span>
         </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-8">
           {/* Video Player */}
-          <Card>
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl overflow-hidden">
             <CardContent className="p-0">
               <VideoPlayer videoId={video.id} />
             </CardContent>
           </Card>
 
           {/* Video Info */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 via-purple-800 to-pink-700 bg-clip-text text-transparent mb-4 leading-tight">
                   {video.title}
                 </h1>
-                <div className="flex items-center space-x-4 text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {formatDate(video.createdAt)}
+                <div className="flex items-center space-x-6 text-sm text-gray-600">
+                  <div className="flex items-center space-x-2">
+                    <div className="p-2 bg-purple-100 rounded-lg">
+                      <Calendar className="h-4 w-4 text-purple-600" />
+                    </div>
+                    <span className="font-medium">{formatDate(video.createdAt)}</span>
                   </div>
-                  <div className="flex items-center">
-                    <Eye className="h-4 w-4 mr-1" />0 views
+                  <div className="flex items-center space-x-2">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Eye className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <span className="font-medium">0 views</span>
                   </div>
                   {video.duration && (
-                    <div className="flex items-center">
-                      <Play className="h-4 w-4 mr-1" />
-                      {formatDuration(video.duration)}
+                    <div className="flex items-center space-x-2">
+                      <div className="p-2 bg-green-100 rounded-lg">
+                        <Play className="h-4 w-4 text-green-600" />
+                      </div>
+                      <span className="font-medium">{formatDuration(video.duration)}</span>
                     </div>
                   )}
                   {video.fileSize && (
-                    <div className="flex items-center">
-                      <HardDrive className="h-4 w-4 mr-1" />
-                      {formatFileSize(video.fileSize)}
+                    <div className="flex items-center space-x-2">
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <HardDrive className="h-4 w-4 text-orange-600" />
+                      </div>
+                      <span className="font-medium">{formatFileSize(video.fileSize)}</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2 ml-4">
-                <Badge variant={video.isPublic ? "default" : "secondary"}>
+              <div className="flex items-center space-x-3 ml-6">
+                <Badge 
+                  variant={video.isPublic ? "default" : "secondary"}
+                  className={`px-4 py-2 rounded-full font-semibold ${
+                    video.isPublic 
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
+                      : 'bg-gradient-to-r from-orange-500 to-red-500 text-white'
+                  }`}
+                >
                   {video.isPublic ? "Public" : "Private"}
                 </Badge>
                 {canEdit && (
-                  <div className="flex space-x-2">
-                    <Button variant="outline" size="sm" onClick={handleEdit}>
-                      <Edit className="h-4 w-4 mr-1" />
+                  <div className="flex space-x-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleEdit}
+                      className="bg-white/80 backdrop-blur-sm hover:bg-white border-purple-200 hover:border-purple-300 text-purple-700 hover:text-purple-800 rounded-xl px-4 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
+                    >
+                      <Edit className="h-4 w-4 mr-2" />
                       Edit
                     </Button>
                     <Button
                       variant="destructive"
                       size="sm"
                       onClick={handleDelete}
+                      className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold rounded-xl px-4 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
                     >
-                      <Trash2 className="h-4 w-4 mr-1" />
+                      <Trash2 className="h-4 w-4 mr-2" />
                       Delete
                     </Button>
                   </div>
@@ -302,75 +335,100 @@ export function VideoDetailPage() {
             </div>
 
             {/* Creator info */}
-            <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-              <Avatar className="h-10 w-10">
-                <AvatarFallback className="bg-primary text-primary-foreground">
-                  {getCreatorInitials()}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="font-medium text-gray-900">
-                  {video.creator
-                    ? `${video.creator.firstName} ${video.creator.lastName}`
-                    : "Unknown Creator"}
+            <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-0 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-4">
+                  <div className="relative">
+                    <Avatar className="h-16 w-16 ring-4 ring-purple-200 shadow-lg">
+                      <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-500 text-white text-xl font-bold">
+                        {getCreatorInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gradient-to-r from-green-400 to-blue-500 rounded-full border-3 border-white"></div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-xl font-bold text-gray-900 mb-1">
+                      {video.creator
+                        ? `${video.creator.firstName} ${video.creator.lastName}`
+                        : "Unknown Creator"}
+                    </div>
+                    <div className="text-gray-600 mb-3">{video.creator?.email}</div>
+                    <div className="flex items-center space-x-4">
+                      <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-xl px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-200">
+                        <Heart className="h-4 w-4 mr-2" />
+                        Follow
+                      </Button>
+                      <Button variant="outline" className="bg-white/80 backdrop-blur-sm hover:bg-white border-purple-200 hover:border-purple-300 text-purple-700 hover:text-purple-800 rounded-xl px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-200">
+                        <Share2 className="h-4 w-4 mr-2" />
+                        Share
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-500">
-                  {video.creator?.email}
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
 
             {/* Description */}
             {video.description && (
-              <div className="prose prose-sm max-w-none">
-                <p className="text-gray-700 whitespace-pre-wrap">
-                  {video.description}
-                </p>
-              </div>
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center space-x-2 text-gray-900">
+                    <Zap className="h-5 w-5 text-purple-600" />
+                    <span>Description</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-lg">
+                    {video.description}
+                  </p>
+                </CardContent>
+              </Card>
             )}
-          </div>
 
-          {/* Comments */}
-          <CommentsSection
-            comments={comments}
-            onAddComment={handleAddComment}
-            canComment={!!user}
-          />
+            {/* Comments */}
+            <CommentsSection
+              comments={comments}
+              onAddComment={handleAddComment}
+              canComment={!!user}
+            />
+          </div>
         </div>
 
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Rating Stats */}
           {ratingStats && (
-            <Card>
+            <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-0 shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Star className="h-5 w-5" />
-                  <span>Ratings</span>
+                <CardTitle className="flex items-center space-x-3 text-gray-900">
+                  <div className="p-2 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl">
+                    <Star className="h-5 w-5 text-white" />
+                  </div>
+                  <span className="text-xl font-bold">Ratings</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-4xl font-black text-gray-900 mb-2">
                     {ratingStats.averageRating
                       ? ratingStats.averageRating.toFixed(1)
                       : "No ratings"}
                   </div>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-600 font-medium">
                     {ratingStats.totalRatings}{" "}
                     {ratingStats.totalRatings === 1 ? "rating" : "ratings"}
                   </div>
                 </div>
 
                 {ratingStats.distribution && (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {[5, 4, 3, 2, 1].map((stars) => (
-                      <div key={stars} className="flex items-center space-x-2">
-                        <span className="text-sm w-2">{stars}</span>
-                        <Star className="h-3 w-3" />
-                        <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div key={stars} className="flex items-center space-x-3">
+                        <span className="text-sm font-bold text-gray-700 w-4">{stars}</span>
+                        <Star className="h-4 w-4 text-yellow-500" />
+                        <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
                           <div
-                            className="bg-yellow-400 h-2 rounded-full"
+                            className="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all duration-500"
                             style={{
                               width: `${
                                 ratingStats.totalRatings > 0
@@ -382,7 +440,7 @@ export function VideoDetailPage() {
                             }}
                           />
                         </div>
-                        <span className="text-xs text-gray-500 w-8">
+                        <span className="text-sm font-bold text-gray-700 w-8">
                           {ratingStats.distribution[stars] || 0}
                         </span>
                       </div>
@@ -394,11 +452,25 @@ export function VideoDetailPage() {
           )}
 
           {/* Add Rating */}
-          <RatingsSection
-            ratings={ratings}
-            onAddRating={handleAddRating}
-            canRate={!!user}
-          />
+          <Card className="bg-gradient-to-br from-blue-50 to-cyan-50 border-0 shadow-xl">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-3 text-gray-900">
+                <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl">
+                  <ThumbsUp className="h-5 w-5 text-white" />
+                </div>
+                <span className="text-xl font-bold">Rate This Video</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 mb-4">
+                Share your thoughts and rate this video to help other viewers!
+              </p>
+              <Button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold rounded-xl py-3 shadow-lg hover:shadow-xl transition-all duration-200">
+                <Star className="h-4 w-4 mr-2" />
+                Rate & Review
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
