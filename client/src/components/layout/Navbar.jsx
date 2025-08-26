@@ -56,22 +56,35 @@ export function Navbar() {
   );
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-black/80 backdrop-blur-xl border-b border-purple-500/30 sticky top-0 z-50 shadow-2xl shadow-purple-500/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-20">
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/dashboard" className="flex items-center space-x-2">
-                <Video className="h-8 w-8 text-primary" />
-                <span className="font-bold text-xl text-gray-900">
-                  VideoStream
-                </span>
+              <Link
+                to="/dashboard"
+                className="flex items-center space-x-4 group"
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 bg-purple-500 rounded-2xl blur-lg opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
+                  <div className="relative p-3 bg-gradient-to-br from-purple-600 via-pink-600 to-purple-800 rounded-2xl border border-purple-400/50 group-hover:scale-110 transition-all duration-300">
+                    <Video className="h-8 w-8 text-white" />
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-black text-2xl bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent tracking-wider">
+                    VIDEO
+                  </span>
+                  <span className="font-black text-2xl bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wider -mt-1">
+                    STREAM
+                  </span>
+                </div>
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:ml-6 md:flex md:space-x-8">
+            <div className="hidden md:ml-12 md:flex md:space-x-2">
               {filteredNavigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.href;
@@ -79,14 +92,17 @@ export function Navbar() {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors ${
+                    className={`relative inline-flex items-center px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-300 ${
                       isActive
-                        ? "border-primary text-primary"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg shadow-purple-500/50"
+                        : "text-gray-300 hover:text-white hover:bg-gray-900/50 border border-transparent hover:border-purple-500/30"
                     }`}
                   >
-                    <Icon className="h-4 w-4 mr-2" />
+                    <Icon className="h-5 w-5 mr-2" />
                     {item.name}
+                    {isActive && (
+                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                    )}
                   </Link>
                 );
               })}
@@ -96,13 +112,13 @@ export function Navbar() {
           {/* Search Bar */}
           <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
             <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-4 w-4 text-gray-400" />
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-purple-400" />
               </div>
               <input
                 type="text"
                 placeholder="Search videos..."
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary text-sm"
+                className="block w-full pl-12 pr-4 py-3 border border-purple-500/30 rounded-2xl leading-5 bg-black/50 backdrop-blur-sm placeholder-gray-400 focus:outline-none focus:placeholder-gray-500 focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 text-white transition-all duration-300"
                 onKeyPress={(e) => {
                   if (e.key === "Enter" && e.target.value.trim()) {
                     navigate(
@@ -117,19 +133,19 @@ export function Navbar() {
           </div>
 
           {/* Profile dropdown */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {user && (
               <>
-                <span className="hidden md:block text-sm text-gray-700">
+                <span className="hidden md:block text-sm text-gray-300 font-medium">
                   Welcome, {user.firstName}
                 </span>
-                <div className="flex items-center space-x-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                <div className="flex items-center space-x-3">
+                  <Avatar className="h-10 w-10 ring-2 ring-purple-500/50">
+                    <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold text-lg">
                       {getInitials(user.firstName, user.lastName)}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="hidden md:block text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                  <span className="hidden md:block text-xs text-purple-300 bg-purple-900/50 px-3 py-2 rounded-full font-medium border border-purple-500/30">
                     {user.role}
                   </span>
                 </div>
@@ -137,7 +153,7 @@ export function Navbar() {
                   variant="ghost"
                   size="sm"
                   onClick={handleLogout}
-                  className="hidden md:flex items-center space-x-1"
+                  className="hidden md:flex items-center space-x-2 text-gray-300 hover:text-white hover:bg-gray-900/50 border border-purple-500/30 hover:border-purple-400/50 transition-all duration-300"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
@@ -148,7 +164,7 @@ export function Navbar() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+              className="md:hidden inline-flex items-center justify-center p-3 rounded-2xl text-gray-300 hover:text-white hover:bg-gray-900/50 border border-purple-500/30 hover:border-purple-400/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-500 transition-all duration-300"
             >
               {isMobileMenuOpen ? (
                 <X className="block h-6 w-6" />
@@ -163,7 +179,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/95 backdrop-blur-xl border-t border-purple-500/30">
             {filteredNavigation.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
@@ -171,29 +187,29 @@ export function Navbar() {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  className={`flex items-center px-4 py-4 rounded-2xl text-base font-bold transition-all duration-300 ${
                     isActive
-                      ? "text-primary bg-primary/10"
-                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                      ? "text-white bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/50"
+                      : "text-gray-300 hover:text-white hover:bg-gray-900/50 border border-transparent hover:border-purple-500/30"
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Icon className="h-5 w-5 mr-3" />
+                  <Icon className="h-6 w-6 mr-3" />
                   {item.name}
                 </Link>
               );
             })}
 
             {/* Mobile search */}
-            <div className="px-3 py-2">
+            <div className="px-4 py-4">
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-4 w-4 text-gray-400" />
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Search className="h-4 w-4 text-purple-400" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search videos..."
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary text-sm"
+                  className="block w-full pl-12 pr-4 py-3 border border-purple-500/30 rounded-2xl leading-5 bg-black/50 placeholder-gray-400 focus:outline-none focus:placeholder-gray-500 focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 text-white transition-all duration-300"
                   onKeyPress={(e) => {
                     if (e.key === "Enter" && e.target.value.trim()) {
                       navigate(
@@ -210,19 +226,19 @@ export function Navbar() {
 
             {/* Mobile user info and logout */}
             {user && (
-              <div className="px-3 py-2 border-t border-gray-200">
-                <div className="flex items-center space-x-3 mb-3">
-                  <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+              <div className="px-4 py-4 border-t border-purple-500/30">
+                <div className="flex items-center space-x-4 mb-4">
+                  <Avatar className="h-14 w-14 ring-2 ring-purple-500/50">
+                    <AvatarFallback className="bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold text-xl">
                       {getInitials(user.firstName, user.lastName)}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <div className="text-base font-medium text-gray-800">
+                    <div className="text-lg font-bold text-white">
                       {user.firstName} {user.lastName}
                     </div>
-                    <div className="text-sm text-gray-500">{user.email}</div>
-                    <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded inline-block">
+                    <div className="text-sm text-gray-400">{user.email}</div>
+                    <div className="text-xs text-purple-300 bg-purple-900/50 px-3 py-1.5 rounded-full font-medium inline-block mt-2 border border-purple-500/30">
                       {user.role}
                     </div>
                   </div>
@@ -230,7 +246,7 @@ export function Navbar() {
                 <Button
                   variant="outline"
                   onClick={handleLogout}
-                  className="w-full justify-start"
+                  className="w-full justify-start border-purple-500/30 text-gray-300 hover:text-white hover:bg-gray-900/50 hover:border-purple-400/50 transition-all duration-300"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout

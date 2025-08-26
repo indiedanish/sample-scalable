@@ -6,9 +6,11 @@ export function Layout({ children }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black">
       {isAuthenticated && <Navbar />}
-      <main className={isAuthenticated ? "" : "min-h-screen"}>{children}</main>
+      <main className={isAuthenticated ? "pt-4" : "min-h-screen"}>
+        {children}
+      </main>
     </div>
   );
 }
