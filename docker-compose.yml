@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "3000:80" # Map host port 3000 to container port 80
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - COSMOS_ENDPOINT=${COSMOS_ENDPOINT}
+      - COSMOS_KEY=${COSMOS_KEY}
+      - COSMOS_DATABASE=${COSMOS_DATABASE}
+      - COSMOS_CONTAINER_COMMENTS=${COSMOS_CONTAINER_COMMENTS}
+      - COSMOS_CONTAINER_RATINGS=${COSMOS_CONTAINER_RATINGS}
+      - AZURE_STORAGE_CONNECTION_STRING=${AZURE_STORAGE_CONNECTION_STRING}
+      - AZURE_STORAGE_CONTAINER=${AZURE_STORAGE_CONTAINER}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - API_PORT=${API_PORT}
+      - CORS_ORIGIN=${CORS_ORIGIN}
+      - MAX_FILE_SIZE=${MAX_FILE_SIZE}
+      - ALLOWED_VIDEO_TYPES=${ALLOWED_VIDEO_TYPES}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

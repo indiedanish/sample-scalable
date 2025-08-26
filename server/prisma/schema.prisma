@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "sqlserver"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  firstName   String
+  lastName    String
+  role        String   @default("CONSUMER") // ADMIN, CREATOR, CONSUMER
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  videos      Video[]
+  
+  @@map("users")
+}
+
+model Video {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  blobUrl     String   // Azure Blob Storage URL
+  fileName    String
+  fileSize    Int
+  duration    Int?     // Duration in seconds
+  // thumbnail   String?  // Thumbnail blob URL
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  creatorId   String
+  creator     User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  
+  @@map("videos")
+}
+
+ 
