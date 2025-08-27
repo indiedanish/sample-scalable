@@ -67,27 +67,33 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <div className="flex justify-center">
-            <Video className="h-12 w-12 text-primary" />
+            <Video className="h-14 w-14 text-emerald-600" />
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
-          <p className="mt-2 text-gray-600">Sign in to your account</p>
+          <h1 className="mt-4 text-4xl font-bold text-slate-900 font-['Inter']">
+            MStream
+          </h1>
+          <p className="mt-2 text-slate-600 font-['Inter']">
+            Sign in to your account
+          </p>
         </div>
 
-        <Card>
+        <Card className="border-2 border-slate-200 bg-white shadow-xl">
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-slate-900">Sign In</CardTitle>
+            <CardDescription className="text-slate-600">
               Enter your email and password to access your account
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-3">
+                <Label htmlFor="email" className="text-slate-700 font-medium">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,17 +105,24 @@ export function LoginForm() {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={
+                    errors.email ? "border-red-500 focus:border-red-500" : ""
+                  }
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-red-600 font-['Inter']">
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="password"
+                  className="text-slate-700 font-medium"
+                >
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -123,32 +136,38 @@ export function LoginForm() {
                       },
                     })}
                     className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
+                      errors.password
+                        ? "border-red-500 focus:border-red-500 pr-12"
+                        : "pr-12"
                     }
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-red-600 font-['Inter']">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin h-5 w-5 border-b-2 border-white mr-2"></div>
                     Signing in...
                   </>
                 ) : (
@@ -157,12 +176,12 @@ export function LoginForm() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-slate-600 font-['Inter']">
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-medium text-emerald-600 hover:text-emerald-700 transition-colors"
                 >
                   Sign up here
                 </Link>
@@ -170,8 +189,6 @@ export function LoginForm() {
             </div>
           </CardContent>
         </Card>
-
-
       </div>
     </div>
   );

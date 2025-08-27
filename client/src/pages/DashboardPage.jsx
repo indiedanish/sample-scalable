@@ -151,28 +151,14 @@ export function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Play className="h-5 w-5" />
-                <span>Browse Videos</span>
+                <span>Watch Videos</span>
               </CardTitle>
               <CardDescription>Explore all available videos</CardDescription>
             </CardHeader>
           </Link>
         </Card>
 
-        {hasRole("CREATOR") && (
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <Link to="/upload">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Plus className="h-5 w-5" />
-                  <span>Upload Video</span>
-                </CardTitle>
-                <CardDescription>
-                  Share your content with the world
-                </CardDescription>
-              </CardHeader>
-            </Link>
-          </Card>
-        )}
+
 
         {hasRole("ADMIN") && (
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
