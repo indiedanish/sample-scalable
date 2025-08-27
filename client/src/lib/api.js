@@ -1,8 +1,7 @@
 //get this from env directly
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://video-app-server.calmwave-a62c5768.westus2.azurecontainerapps.io";
+  "https://s-server.yellowcoast-43be55fc.westus2.azurecontainerapps.io";
 
 // Helper functions for headers
 export const getAuthHeaders = (token) => ({
@@ -146,6 +145,11 @@ export async function deleteVideo(id) {
 }
 
 export function getReelStreamUrl(id) {
+  return `${API_BASE_URL}/videos/${id}/stream`;
+}
+
+// Add the missing function that VideoPlayer needs
+export function getVideoStreamUrl(id) {
   return `${API_BASE_URL}/videos/${id}/stream`;
 }
 
