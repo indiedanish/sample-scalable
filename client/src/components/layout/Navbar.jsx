@@ -99,7 +99,6 @@ export function Navbar() {
             </div>
           </div>
 
- 
           {/* Profile dropdown */}
           <div className="flex items-center space-x-4">
             {user && (
