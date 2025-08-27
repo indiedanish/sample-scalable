@@ -1,7 +1,7 @@
 //get this from env directly
 
 const API_BASE_URL =
-  "http://localhost:3001";
+  "https://j-server.lemondune-f04a7889.spaincentral.azurecontainerapps.io";
 
 // Helper functions for headers
 export const getAuthHeaders = (token) => ({
