@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { X, UserPlus, Eye, EyeOff } from "lucide-react";
+import { X, UserPlus, Eye, EyeOff, Zap, Shield } from "lucide-react";
 
 export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,27 +46,27 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black bg-opacity-50"
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={handleClose}
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4">
-        <Card className="border-0 shadow-none">
+      <div className="relative bg-background border border-primary/20 rounded-none shadow-[0_8px_32px_rgba(0,255,255,0.1)] w-full max-w-md mx-4">
+        <Card className="border-0 shadow-none bg-transparent">
           <CardHeader className="relative">
             <Button
               variant="ghost"
               size="sm"
-              className="absolute right-0 top-0 h-8 w-8 p-0"
+              className="absolute right-0 top-0 h-8 w-8 p-0 text-muted-foreground hover:text-primary hover:bg-primary/10"
               onClick={handleClose}
             >
               <X className="h-4 w-4" />
             </Button>
-            <CardTitle className="flex items-center space-x-2">
+            <CardTitle className="font-orbitron text-lg text-primary flex items-center space-x-2">
               <UserPlus className="h-5 w-5" />
               <span>Create Creator Account</span>
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="font-rajdhani text-muted-foreground">
               Create a new creator account to allow content uploads
             </CardDescription>
           </CardHeader>
@@ -78,7 +78,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
             >
               {/* First Name */}
               <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
+                <Label
+                  htmlFor="firstName"
+                  className="font-rajdhani font-semibold text-foreground"
+                >
+                  First Name
+                </Label>
                 <Input
                   id="firstName"
                   type="text"
@@ -90,10 +95,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
                       message: "First name must be at least 2 characters",
                     },
                   })}
-                  className={errors.firstName ? "border-destructive" : ""}
+                  className={`input-futuristic ${
+                    errors.firstName ? "border-destructive" : ""
+                  }`}
                 />
                 {errors.firstName && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive font-rajdhani">
                     {errors.firstName.message}
                   </p>
                 )}
@@ -101,7 +108,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
 
               {/* Last Name */}
               <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
+                <Label
+                  htmlFor="lastName"
+                  className="font-rajdhani font-semibold text-foreground"
+                >
+                  Last Name
+                </Label>
                 <Input
                   id="lastName"
                   type="text"
@@ -113,10 +125,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
                       message: "Last name must be at least 2 characters",
                     },
                   })}
-                  className={errors.lastName ? "border-destructive" : ""}
+                  className={`input-futuristic ${
+                    errors.lastName ? "border-destructive" : ""
+                  }`}
                 />
                 {errors.lastName && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive font-rajdhani">
                     {errors.lastName.message}
                   </p>
                 )}
@@ -124,7 +138,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
 
               {/* Email */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label
+                  htmlFor="email"
+                  className="font-rajdhani font-semibold text-foreground"
+                >
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -136,10 +155,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`input-futuristic ${
+                    errors.email ? "border-destructive" : ""
+                  }`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive font-rajdhani">
                     {errors.email.message}
                   </p>
                 )}
@@ -147,7 +168,12 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
 
               {/* Password */}
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label
+                  htmlFor="password"
+                  className="font-rajdhani font-semibold text-foreground"
+                >
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -160,32 +186,32 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
                         message: "Password must be at least 6 characters",
                       },
                     })}
-                    className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
-                    }
+                    className={`input-futuristic pr-10 ${
+                      errors.password ? "border-destructive" : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-primary transition-colors duration-300"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive font-rajdhani">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
               {/* Info Note */}
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <p className="text-sm text-blue-700">
+              <div className="p-3 bg-primary/10 border border-primary/20 rounded-none">
+                <p className="text-sm text-primary font-rajdhani">
                   <strong>Note:</strong> The creator will be able to upload and
                   manage videos once their account is created.
                 </p>
@@ -198,18 +224,18 @@ export function CreateCreatorModal({ isOpen, onClose, onSubmit }) {
                   variant="outline"
                   onClick={handleClose}
                   disabled={isSubmitting}
-                  className="flex-1"
+                  className="flex-1 border-secondary/30 text-secondary hover:text-secondary/80 hover:bg-secondary/10 font-rajdhani"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1"
+                  className="btn-futuristic flex-1 font-rajdhani"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
                       Creating...
                     </>
                   ) : (

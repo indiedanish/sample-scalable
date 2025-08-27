@@ -2,50 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --primary: 221.2 83.2% 53.3%;
-        --primary-foreground: 210 40% 98%;
-        --secondary: 210 40% 96%;
-        --secondary-foreground: 222.2 84% 4.9%;
-        --muted: 210 40% 96%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96%;
-        --accent-foreground: 222.2 84% 4.9%;
-        --destructive: 0 84.2% 60.2%;
+        /* Futuristic Dark Theme Colors */
+        --background: 220 23% 6%;
+        --foreground: 210 40% 98%;
+        --card: 220 23% 8%;
+        --card-foreground: 210 40% 98%;
+        --popover: 220 23% 8%;
+        --popover-foreground: 210 40% 98%;
+        
+        /* Neon Colors */
+        --primary: 180 100% 50%; /* Electric Blue */
+        --primary-foreground: 220 23% 6%;
+        --secondary: 300 100% 50%; /* Neon Magenta */
+        --secondary-foreground: 220 23% 6%;
+        --accent: 120 100% 50%; /* Lime Green */
+        --accent-foreground: 220 23% 6%;
+        
+        --muted: 220 23% 12%;
+        --muted-foreground: 215 20% 65%;
+        --destructive: 0 84% 60%;
         --destructive-foreground: 210 40% 98%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 221.2 83.2% 53.3%;
-        --radius: 0.75rem;
+        --border: 220 23% 15%;
+        --input: 220 23% 12%;
+        --ring: 180 100% 50%;
+        --radius: 0.5rem;
     }
 
     .dark {
-        --background: 222.2 84% 4.9%;
+        --background: 220 23% 6%;
         --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
+        --card: 220 23% 8%;
         --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
+        --popover: 220 23% 8%;
         --popover-foreground: 210 40% 98%;
-        --primary: 217.2 91.2% 59.8%;
-        --primary-foreground: 222.2 84% 4.9%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --destructive: 0 62.8% 30.6%;
+        --primary: 180 100% 50%;
+        --primary-foreground: 220 23% 6%;
+        --secondary: 300 100% 50%;
+        --secondary-foreground: 220 23% 6%;
+        --accent: 120 100% 50%;
+        --accent-foreground: 220 23% 6%;
+        --muted: 220 23% 12%;
+        --muted-foreground: 215 20% 65%;
+        --destructive: 0 84% 60%;
         --destructive-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 224.3 76.3% 94.1%;
+        --border: 220 23% 15%;
+        --input: 220 23% 12%;
+        --ring: 180 100% 50%;
     }
 }
 
@@ -56,5 +62,104 @@
 
     body {
         @apply bg-background text-foreground;
+        font-family: 'Exo 2', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Orbitron', monospace;
+    }
+
+    .font-tech {
+        font-family: 'Rajdhani', sans-serif;
+    }
+}
+
+@layer components {
+    /* Futuristic Button Styles */
+    .btn-futuristic {
+        @apply relative overflow-hidden bg-gradient-to-r from-primary/20 to-secondary/20 
+               border border-primary/50 text-primary font-tech font-semibold
+               px-6 py-3 rounded-none transition-all duration-300
+               hover:from-primary/40 hover:to-secondary/40 hover:border-primary
+               hover:shadow-[0_0_20px_rgba(0,255,255,0.5)] hover:scale-105
+               active:scale-95;
+    }
+
+    .btn-futuristic::before {
+        content: '';
+        @apply absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10
+               opacity-0 transition-opacity duration-300;
+    }
+
+    .btn-futuristic:hover::before {
+        @apply opacity-100;
+    }
+
+    /* Futuristic Input Styles */
+    .input-futuristic {
+        @apply bg-transparent border-b-2 border-primary/50 text-foreground
+               px-4 py-3 rounded-none transition-all duration-300
+               focus:border-primary focus:outline-none focus:ring-0
+               placeholder:text-muted-foreground/60;
+    }
+
+    .input-futuristic:focus {
+        @apply shadow-[0_4px_20px_rgba(0,255,255,0.3)];
+    }
+
+    /* Futuristic Card Styles */
+    .card-futuristic {
+        @apply bg-card/80 backdrop-blur-sm border border-primary/20
+               rounded-none shadow-[0_8px_32px_rgba(0,0,0,0.3)]
+               hover:border-primary/40 hover:shadow-[0_8px_32px_rgba(0,255,255,0.1)]
+               transition-all duration-300;
+    }
+
+    /* Neon Glow Effects */
+    .neon-glow {
+        @apply shadow-[0_0_20px_rgba(0,255,255,0.5)];
+    }
+
+    .neon-glow-magenta {
+        @apply shadow-[0_0_20px_rgba(255,0,255,0.5)];
+    }
+
+    .neon-glow-green {
+        @apply shadow-[0_0_20px_rgba(0,255,0,0.5)];
+    }
+
+    /* Futuristic Navbar */
+    .navbar-futuristic {
+        @apply bg-background/80 backdrop-blur-md border-b border-primary/20
+               sticky top-0 z-50 transition-all duration-300;
+    }
+
+    .navbar-futuristic:hover {
+        @apply bg-background/90 border-primary/40;
+    }
+
+    /* Section Animations */
+    .fade-in {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .slide-up {
+        animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from { 
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
     }
 }

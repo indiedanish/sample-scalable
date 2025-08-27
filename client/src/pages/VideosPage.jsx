@@ -1,300 +1,251 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { getVideos } from "@/lib/api";
-import { VideoCard } from "@/features/videos/components/VideoCard";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
 import {
+  Video,
   Search,
   Filter,
-  Video,
-  ChevronLeft,
-  ChevronRight,
-  SlidersHorizontal,
+  Play,
+  Clock,
+  Eye,
+  User,
+  Grid,
+  List,
+  ArrowRight,
+  Zap,
 } from "lucide-react";
 
 export function VideosPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [pagination, setPagination] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState("grid");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState(
     searchParams.get("search") || ""
   );
-  const [showFilters, setShowFilters] = useState(false);
-
-  // Filter states
-  const [filters, setFilters] = useState({
-    search: searchParams.get("search") || "",
-    page: parseInt(searchParams.get("page")) || 1,
-    limit: parseInt(searchParams.get("limit")) || 12,
-    creatorId: searchParams.get("creatorId") || "",
-    minDuration: searchParams.get("minDuration") || "",
-    maxDuration: searchParams.get("maxDuration") || "",
-    startDate: searchParams.get("startDate") || "",
-    endDate: searchParams.get("endDate") || "",
-  });
 
   useEffect(() => {
-    loadVideos();
-  }, [searchParams]);
+    const fetchVideos = async () => {
+      try {
+        const response = await getVideos();
 
-  const loadVideos = async () => {
-    try {
-      setLoading(true);
-      setError("");
+        // Handle different possible response structures
+        let videos = [];
+        if (response.data?.videos) {
+          // Nested structure: response.data.videos
+          videos = response.data.videos;
+        } else if (response.videos) {
+          // Direct structure: response.videos
+          videos = response.videos;
+        } else if (Array.isArray(response)) {
+          // Array structure: response is directly an array
+          videos = response;
+        }
 
-      const params = Object.fromEntries(searchParams.entries());
-      const response = await getVideos(params);
-
-      if (response.success) {
-        setVideos(response.data.videos);
-        setPagination(response.data.pagination);
-      } else {
-        setError("Failed to load videos");
+        setVideos(videos);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+        setVideos([]); // Set empty array on error
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      setError("Failed to load videos");
-      console.error("Videos error:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  const updateFilters = (newFilters) => {
-    const updatedFilters = { ...filters, ...newFilters, page: 1 };
-    setFilters(updatedFilters);
-
-    // Update URL
-    const params = new URLSearchParams();
-    Object.entries(updatedFilters).forEach(([key, value]) => {
-      if (value && value !== "") {
-        params.set(key, value);
-      }
-    });
-    setSearchParams(params);
-  };
+    fetchVideos();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    updateFilters({ search: searchTerm });
+    if (searchTerm.trim()) {
+      setSearchParams({ search: searchTerm.trim() });
+    } else {
+      setSearchParams({});
+    }
   };
 
-  const handlePageChange = (newPage) => {
-    updateFilters({ page: newPage });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const filteredVideos = videos.filter(
+    (video) =>
+      video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      video.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      `${video.creator?.firstName} ${video.creator?.lastName}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
+  );
 
-  const clearFilters = () => {
-    setSearchTerm("");
-    setFilters({
-      search: "",
-      page: 1,
-      limit: 12,
-      creatorId: "",
-      minDuration: "",
-      maxDuration: "",
-      startDate: "",
-      endDate: "",
-    });
-    setSearchParams(new URLSearchParams({ page: "1", limit: "12" }));
-  };
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground font-rajdhani">
+            Loading videos...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen bg-background p-6 space-y-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Videos</h1>
-        <p className="text-gray-600 mt-2">
-          Discover and watch amazing content from our creators
+      <div className="text-center space-y-4 fade-in">
+        <h1 className="font-orbitron text-4xl md:text-6xl font-bold text-primary">
+          Video Library
+        </h1>
+        <p className="text-xl text-muted-foreground font-rajdhani max-w-2xl mx-auto">
+          Discover and stream the latest content from creators around the world
         </p>
+        <div className="flex justify-center">
+          <Zap className="h-6 w-6 text-accent" />
+        </div>
       </div>
 
-      {/* Search and Filters */}
-      <div className="space-y-4 mb-8">
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search videos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Button type="submit">Search</Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2"
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-            <span>Filters</span>
-          </Button>
-        </form>
+      {/* Search and Controls */}
+      <div className="space-y-6 slide-up">
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <form onSubmit={handleSearch} className="flex-1 max-w-md">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search videos, creators, or descriptions..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="input-futuristic pl-10 bg-transparent"
+              />
+            </div>
+          </form>
 
-        {/* Advanced Filters */}
-        {showFilters && (
-          <Card>
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Min Duration (seconds)
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    value={filters.minDuration}
-                    onChange={(e) =>
-                      setFilters({ ...filters, minDuration: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Max Duration (seconds)
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="3600"
-                    value={filters.maxDuration}
-                    onChange={(e) =>
-                      setFilters({ ...filters, maxDuration: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Start Date
-                  </label>
-                  <Input
-                    type="date"
-                    value={filters.startDate}
-                    onChange={(e) =>
-                      setFilters({ ...filters, startDate: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    End Date
-                  </label>
-                  <Input
-                    type="date"
-                    value={filters.endDate}
-                    onChange={(e) =>
-                      setFilters({ ...filters, endDate: e.target.value })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="flex justify-between mt-4">
-                <Button variant="outline" onClick={clearFilters}>
-                  Clear Filters
-                </Button>
-                <Button onClick={() => updateFilters(filters)}>
-                  Apply Filters
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant={viewMode === "grid" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("grid")}
+              className="font-rajdhani"
+            >
+              <Grid className="h-4 w-4 mr-2" />
+              Grid
+            </Button>
+            <Button
+              variant={viewMode === "list" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("list")}
+              className="font-rajdhani"
+            >
+              <List className="h-4 w-4 mr-2" />
+              List
+            </Button>
+          </div>
+        </div>
+
+        {searchTerm && (
+          <div className="text-center">
+            <p className="text-muted-foreground font-rajdhani">
+              Showing {filteredVideos.length} results for "{searchTerm}"
+            </p>
+          </div>
         )}
       </div>
 
-      {/* Results */}
-      {loading ? (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      {/* Videos Grid/List */}
+      {filteredVideos.length === 0 ? (
+        <div className="text-center py-12 slide-up">
+          <Video className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="font-orbitron text-xl text-muted-foreground mb-2">
+            No videos found
+          </h3>
+          <p className="text-muted-foreground font-rajdhani">
+            {searchTerm
+              ? "Try adjusting your search terms"
+              : "No videos available at the moment"}
+          </p>
         </div>
-      ) : error ? (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-600">{error}</p>
-        </div>
-      ) : videos.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Video className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No videos found
-            </h3>
-            <p className="text-gray-500 text-center">
-              {filters.search
-                ? `No videos found matching "${filters.search}"`
-                : "No videos match your current filters"}
-            </p>
-          </CardContent>
-        </Card>
       ) : (
-        <>
-          {/* Results count */}
-          <div className="mb-6">
-            <p className="text-sm text-gray-600">
-              Showing {videos.length} of {pagination?.total || 0} videos
-              {filters.search && (
-                <span>
-                  {" "}
-                  for "<strong>{filters.search}</strong>"
-                </span>
-              )}
-            </p>
-          </div>
-
-          {/* Video Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-            {videos.map((video) => (
-              <VideoCard key={video.id} video={video} />
-            ))}
-          </div>
-
-          {/* Pagination */}
-          {pagination && pagination.pages > 1 && (
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                variant="outline"
-                onClick={() => handlePageChange(pagination.current - 1)}
-                disabled={pagination.current <= 1}
+        <div
+          className={`space-y-6 ${
+            viewMode === "grid"
+              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : ""
+          }`}
+        >
+          {filteredVideos.map((video) => (
+            <Link key={video.id} to={`/videos/${video.id}`}>
+              <Card
+                className={`card-futuristic group hover:scale-105 transition-all duration-300 cursor-pointer ${
+                  viewMode === "list" ? "flex flex-row" : ""
+                }`}
               >
-                <ChevronLeft className="h-4 w-4 mr-1" />
-                Previous
-              </Button>
-
-              <div className="flex items-center space-x-1">
-                {[...Array(Math.min(5, pagination.pages))].map((_, i) => {
-                  const pageNum = Math.max(1, pagination.current - 2) + i;
-                  if (pageNum > pagination.pages) return null;
-
-                  return (
-                    <Button
-                      key={pageNum}
-                      variant={
-                        pageNum === pagination.current ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() => handlePageChange(pageNum)}
+                <CardHeader className={viewMode === "list" ? "flex-1" : ""}>
+                  <div className="flex items-center space-x-3">
+                    <div
+                      className={`p-2 bg-primary/20 rounded border border-primary/30 ${
+                        viewMode === "list" ? "flex-shrink-0" : ""
+                      }`}
                     >
-                      {pageNum}
-                    </Button>
-                  );
-                })}
-              </div>
+                      <Play className="h-5 w-5 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="font-rajdhani text-lg text-primary truncate">
+                        {video.title}
+                      </CardTitle>
+                      <CardDescription className="font-rajdhani text-muted-foreground">
+                        by {video.creator?.firstName} {video.creator?.lastName}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent
+                  className={viewMode === "list" ? "flex-shrink-0" : ""}
+                >
+                  {video.description && (
+                    <p className="text-muted-foreground font-rajdhani text-sm mb-4 line-clamp-2">
+                      {video.description}
+                    </p>
+                  )}
+                  <div className="flex items-center justify-between text-sm text-muted-foreground font-rajdhani">
+                    <div className="flex items-center space-x-2">
+                      <Clock className="h-4 w-4" />
+                      <span>
+                        {new Date(video.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Eye className="h-4 w-4" />
+                      <span>{video.views || 0}</span>
+                    </div>
+                  </div>
+                  {viewMode === "list" && (
+                    <div className="mt-3 flex items-center text-primary group-hover:text-primary/80 transition-colors duration-300">
+                      <span className="font-rajdhani font-semibold text-sm">
+                        Watch Now
+                      </span>
+                      <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      )}
 
-              <Button
-                variant="outline"
-                onClick={() => handlePageChange(pagination.current + 1)}
-                disabled={pagination.current >= pagination.pages}
-              >
-                Next
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            </div>
-          )}
-        </>
+      {/* Load More Button */}
+      {filteredVideos.length > 0 && (
+        <div className="text-center pt-8 slide-up">
+          <Button className="btn-futuristic font-orbitron">
+            Load More Videos
+            <Zap className="h-4 w-4 ml-2" />
+          </Button>
+        </div>
       )}
     </div>
   );

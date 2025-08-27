@@ -51,11 +51,24 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Custom neon colors
+        neon: {
+          blue: "#00ffff",
+          magenta: "#ff00ff",
+          green: "#00ff00",
+          cyan: "#00ffff",
+          yellow: "#ffff00",
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        'orbitron': ['Orbitron', 'monospace'],
+        'exo': ['Exo 2', 'sans-serif'],
+        'rajdhani': ['Rajdhani', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
@@ -66,11 +79,58 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "glow": {
+          "0%, 100%": { 
+            boxShadow: "0 0 20px rgba(0, 255, 255, 0.5)",
+            borderColor: "rgba(0, 255, 255, 0.5)"
+          },
+          "50%": { 
+            boxShadow: "0 0 30px rgba(0, 255, 255, 0.8)",
+            borderColor: "rgba(0, 255, 255, 0.8)"
+          },
+        },
+        "pulse-neon": {
+          "0%, 100%": { 
+            opacity: "1",
+            transform: "scale(1)"
+          },
+          "50%": { 
+            opacity: "0.8",
+            transform: "scale(1.05)"
+          },
+        },
+        "slide-in-left": {
+          "0%": { 
+            opacity: "0",
+            transform: "translateX(-30px)"
+          },
+          "100%": { 
+            opacity: "1",
+            transform: "translateX(0)"
+          },
+        },
+        "slide-in-right": {
+          "0%": { 
+            opacity: "0",
+            transform: "translateX(30px)"
+          },
+          "100%": { 
+            opacity: "1",
+            transform: "translateX(0)"
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "glow": "glow 2s ease-in-out infinite",
+        "pulse-neon": "pulse-neon 2s ease-in-out infinite",
+        "slide-in-left": "slide-in-left 0.6s ease-out",
+        "slide-in-right": "slide-in-right 0.6s ease-out",
       },
+      backdropBlur: {
+        xs: '2px',
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],

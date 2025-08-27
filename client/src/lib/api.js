@@ -1,7 +1,8 @@
 //get this from env directly
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "https://video-app-server.calmwave-a62c5768.westus2.azurecontainerapps.io";
+  import.meta.env.VITE_API_BASE_URL ||
+  "https://video-app-server.calmwave-a62c5768.westus2.azurecontainerapps.io";
 
 // Helper functions for headers
 export const getAuthHeaders = (token) => ({
@@ -204,6 +205,38 @@ export async function getDashboardStats() {
   if (!token) throw new Error("No token found");
 
   return await apiCall("/dashboard/stats", {
+    headers: getAuthHeaders(token),
+  });
+}
+
+// User management API calls
+export async function getUsers() {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No token found");
+
+  return await apiCall("/users", {
+    headers: getAuthHeaders(token),
+  });
+}
+
+export async function updateUserStatus(userId, status) {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No token found");
+
+  return await apiCall(`/users/${userId}/status`, {
+    method: "PUT",
+    headers: getAuthHeaders(token),
+    body: JSON.stringify({ status }),
+  });
+}
+
+// Video view tracking
+export async function updateVideoViews(videoId) {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("No token found");
+
+  return await apiCall(`/videos/${videoId}/views`, {
+    method: "POST",
     headers: getAuthHeaders(token),
   });
 }
