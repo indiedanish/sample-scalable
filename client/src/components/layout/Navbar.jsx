@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   Search,
+  Zap,
 } from "lucide-react";
 
 export function Navbar() {
@@ -56,22 +57,28 @@ export function Navbar() {
   );
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-green-500/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between h-20">
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/dashboard" className="flex items-center space-x-2">
-                <Video className="h-8 w-8 text-primary" />
-                <span className="font-bold text-xl text-gray-900">
-                  VideoStream
+              <Link
+                to="/dashboard"
+                className="flex items-center space-x-3 group"
+              >
+                <div className="relative">
+                  <Zap className="h-10 w-10 text-green-400 group-hover:text-green-300 transition-all duration-300 neon-glow" />
+                  <div className="absolute inset-0 bg-green-400/20 rounded-full blur-xl group-hover:bg-green-300/30 transition-all duration-300"></div>
+                </div>
+                <span className="font-black text-2xl bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent neon-text">
+                  CYBERSTREAM
                 </span>
               </Link>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:ml-6 md:flex md:space-x-8">
+            <div className="hidden md:ml-12 md:flex md:space-x-1">
               {filteredNavigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.href;
@@ -79,14 +86,13 @@ export function Navbar() {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors ${
+                    className={`relative group inline-flex items-center px-6 py-2 text-sm font-bold transition-all duration-300 ${
                       isActive
-                        ? "border-primary text-primary"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                        ? "text-green-400 bg-green-500/10 border border-green-500/30 rounded-lg"
+                        : "text-gray-300 hover:text-green-400 hover:bg-green-500/5 rounded-lg"
                     }`}
                   >
-                    <Icon className="h-4 w-4 mr-2" />
-                    {item.name}
+                    <Icon className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
                   </Link>
                 );
               })}
@@ -96,66 +102,43 @@ export function Navbar() {
           {/* Search Bar */}
           <div className="hidden md:flex items-center flex-1 max-w-md mx-8">
             <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-4 w-4 text-gray-400" />
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-green-400" />
               </div>
               <input
                 type="text"
                 placeholder="Search videos..."
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary text-sm"
-                onKeyPress={(e) => {
-                  if (e.key === "Enter" && e.target.value.trim()) {
-                    navigate(
-                      `/videos?search=${encodeURIComponent(
-                        e.target.value.trim()
-                      )}`
-                    );
-                  }
-                }}
+                className="w-full pl-12 pr-4 py-3 bg-black/50 border border-green-500/30 rounded-lg text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500 transition-all duration-300"
               />
             </div>
           </div>
 
-          {/* Profile dropdown */}
+          {/* User Menu */}
           <div className="flex items-center space-x-4">
-            {user && (
-              <>
-                <span className="hidden md:block text-sm text-gray-700">
-                  Welcome, {user.firstName}
-                </span>
-                <div className="flex items-center space-x-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      {getInitials(user.firstName, user.lastName)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="hidden md:block text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                    {user.role}
-                  </span>
+            <div className="hidden md:flex items-center space-x-3">
+              <Avatar className="h-10 w-10 border-2 border-green-500/30 hover:border-green-400 transition-colors duration-300">
+                <AvatarFallback className="bg-green-500/20 text-green-400 font-bold">
+                  {getInitials(user?.firstName, user?.lastName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="text-right">
+                <div className="text-sm font-medium text-gray-100">
+                  {user?.firstName} {user?.lastName}
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleLogout}
-                  className="hidden md:flex items-center space-x-1"
-                >
-                  <LogOut className="h-4 w-4" />
-                  <span>Logout</span>
-                </Button>
-              </>
-            )}
+                <div className="text-xs text-green-400 capitalize">
+                  {user?.role?.toLowerCase()}
+                </div>
+              </div>
+            </div>
 
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+            <Button
+              onClick={handleLogout}
+              variant="ghost"
+              size="sm"
+              className="text-gray-300 hover:text-red-400 hover:bg-red-500/10 border border-red-500/30 hover:border-red-400 transition-all duration-300"
             >
-              {isMobileMenuOpen ? (
-                <X className="block h-6 w-6" />
-              ) : (
-                <Menu className="block h-6 w-6" />
-              )}
-            </button>
+              <LogOut className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </div>
@@ -174,7 +157,7 @@ export function Navbar() {
                   className={`flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     isActive
                       ? "text-primary bg-primary/10"
-                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                      : "text-gray-700 hover:text-gray-100 hover:bg-gray-50"
                   }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

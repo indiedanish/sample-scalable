@@ -74,7 +74,7 @@ export function DashboardPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Welcome Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-3xl font-bold text-gray-100">
           Welcome back, {user?.firstName}!
         </h1>
         <p className="text-gray-600 mt-2">
@@ -151,7 +151,7 @@ export function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Play className="h-5 w-5" />
-                <span>Browse Videos</span>
+                <span>Search Videos</span>
               </CardTitle>
               <CardDescription>Explore all available videos</CardDescription>
             </CardHeader>
@@ -192,7 +192,7 @@ export function DashboardPage() {
       {/* Latest Videos */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Latest Videos</h2>
+          <h2 className="text-2xl font-bold text-gray-100">Latest Videos</h2>
           <Link to="/videos">
             <Button variant="outline" className="flex items-center space-x-2">
               <span>View All</span>
@@ -211,7 +211,7 @@ export function DashboardPage() {
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <Video className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-gray-100 mb-2">
                 No videos yet
               </h3>
               <p className="text-gray-500 text-center mb-4">
