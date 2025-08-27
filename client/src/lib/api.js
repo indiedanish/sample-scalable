@@ -1,7 +1,7 @@
 //get this from env directly
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "https://video-app-server.calmwave-a62c5768.westus2.azurecontainerapps.io";
+  "https://a-server.whitecliff-b7b9de8f.switzerlandnorth.azurecontainerapps.io";
 
 // Helper functions for headers
 export const getAuthHeaders = (token) => ({
