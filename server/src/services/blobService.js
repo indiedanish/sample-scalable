@@ -92,7 +92,7 @@ class BlobService {
   }
 
   // Get video stream for streaming
-  async getVideoStream(blobUrl, range) {
+  async getReelStream(blobUrl, range) {
     try {
       // Extract blob name from URL
       const url = new URL(blobUrl);

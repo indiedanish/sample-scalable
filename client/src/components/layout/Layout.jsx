@@ -6,9 +6,15 @@ export function Layout({ children }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {isAuthenticated && <Navbar />}
-      <main className={isAuthenticated ? "" : "min-h-screen"}>{children}</main>
+      <main
+        className={
+          isAuthenticated ? "ml-64 transition-all duration-300" : "min-h-screen"
+        }
+      >
+        {children}
+      </main>
     </div>
   );
 }

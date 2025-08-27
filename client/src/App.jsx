@@ -25,6 +25,11 @@ import { UnauthorizedPage } from "@/pages/UnauthorizedPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 
 function App() {
+  // Add dark theme class to document
+  React.useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
+
   return (
     <Router>
       <AuthProvider>

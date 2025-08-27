@@ -148,7 +148,7 @@ class VideoController {
       }
 
       // Get blob stream from Azure
-      const streamResult = await blobService.getVideoStream(
+      const streamResult = await blobService.getReelStream(
         video.blobUrl,
         range
       );

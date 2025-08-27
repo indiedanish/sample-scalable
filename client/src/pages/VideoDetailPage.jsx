@@ -10,7 +10,7 @@ import {
   addRating,
   deleteVideo,
   updateVideo,
-  getVideoStreamUrl,
+  getReelStreamUrl,
 } from "@/lib/api";
 import { canEditVideo } from "@/lib/auth";
 import { formatDate, formatDuration, formatFileSize } from "@/lib/utils";

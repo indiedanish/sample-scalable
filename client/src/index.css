@@ -1,51 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
     :root {
+        /* New sophisticated dark theme */
+        --background: 220 23% 6%;
+        --foreground: 210 40% 98%;
+        --card: 220 23% 8%;
+        --card-foreground: 210 40% 98%;
+        --popover: 220 23% 8%;
+        --popover-foreground: 210 40% 98%;
+        
+        /* Vibrant primary colors */
+        --primary: 262 83% 58%;
+        --primary-foreground: 210 40% 98%;
+        
+        /* Sophisticated secondary */
+        --secondary: 220 23% 12%;
+        --secondary-foreground: 210 40% 98%;
+        
+        /* Accent colors */
+        --accent: 262 83% 58%;
+        --accent-foreground: 210 40% 98%;
+        
+        /* Muted tones */
+        --muted: 220 23% 12%;
+        --muted-foreground: 215 20% 65%;
+        
+        /* Destructive */
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 210 40% 98%;
+        
+        /* Borders and inputs */
+        --border: 220 23% 15%;
+        --input: 220 23% 15%;
+        --ring: 262 83% 58%;
+        
+        /* New radius system */
+        --radius: 0.5rem;
+    }
+
+    .light {
         --background: 0 0% 100%;
         --foreground: 222.2 84% 4.9%;
         --card: 0 0% 100%;
         --card-foreground: 222.2 84% 4.9%;
         --popover: 0 0% 100%;
         --popover-foreground: 222.2 84% 4.9%;
-        --primary: 221.2 83.2% 53.3%;
+        --primary: 262 83% 58%;
         --primary-foreground: 210 40% 98%;
         --secondary: 210 40% 96%;
         --secondary-foreground: 222.2 84% 4.9%;
         --muted: 210 40% 96%;
         --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96%;
+        --accent: 262 83% 58%;
         --accent-foreground: 222.2 84% 4.9%;
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
         --border: 214.3 31.8% 91.4%;
         --input: 214.3 31.8% 91.4%;
-        --ring: 221.2 83.2% 53.3%;
-        --radius: 0.75rem;
-    }
-
-    .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
-        --primary: 217.2 91.2% 59.8%;
-        --primary-foreground: 222.2 84% 4.9%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 224.3 76.3% 94.1%;
+        --ring: 262 83% 58%;
+        --radius: 0.5rem;
     }
 }
 
@@ -55,6 +72,41 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background text-foreground font-sans;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+    }
+
+    code, pre {
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    }
+}
+
+@layer components {
+    .glass-effect {
+        @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    }
+    
+    .gradient-border {
+        background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+        padding: 1px;
+        border-radius: var(--radius);
+    }
+    
+    .gradient-border > * {
+        @apply bg-background rounded-[calc(var(--radius)-1px)];
+    }
+    
+    .hover-lift {
+        @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl;
+    }
+    
+    .text-gradient {
+        @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
     }
 }
