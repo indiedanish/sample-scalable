@@ -10,6 +10,7 @@ const swaggerSpecs = require("./src/config/swagger");
 const authRoutes = require("./src/routes/auth");
 const videoRoutes = require("./src/routes/videos");
 const dashboardRoutes = require("./src/routes/dashboard");
+const usersRoutes = require("./src/routes/users");
 
 // Import configurations
 const { initializeContainers } = require("./src/config/cosmos");
@@ -78,6 +79,7 @@ app.use("/auth", authRoutes);
 app.use("/creators", authRoutes); // This will handle POST /creators
 app.use("/videos", videoRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/users", usersRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
