@@ -13,7 +13,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Video, Eye, EyeOff, CheckCircle } from "lucide-react";
+import {
+  Video,
+  Eye,
+  EyeOff,
+  CheckCircle,
+  Sparkles,
+  UserPlus,
+} from "lucide-react";
 
 export function SignupForm() {
   const navigate = useNavigate();
@@ -77,28 +84,59 @@ export function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pastel-blue/20 via-pastel-purple/20 to-pastel-pink/20 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-pastel-pink/30 to-pastel-orange/30 rounded-full blur-3xl animate-float"></div>
+        <div
+          className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-br from-pastel-blue/30 to-pastel-purple/30 rounded-full blur-3xl animate-float"
+          style={{ animationDelay: "1.5s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-pastel-orange/20 to-pastel-pink/20 rounded-full blur-3xl animate-float"
+          style={{ animationDelay: "3s" }}
+        ></div>
+      </div>
+
+      <div className="max-w-md w-full relative z-10 fade-in">
         <div className="text-center mb-8">
-          <div className="flex justify-center">
-            <Video className="h-12 w-12 text-primary" />
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="p-4 bg-gradient-to-br from-pastel-pink to-pastel-orange rounded-full shadow-2xl shadow-pastel-pink/30">
+                <UserPlus className="h-12 w-12 text-white" />
+              </div>
+              <div className="absolute -inset-2 bg-gradient-to-br from-pastel-pink/20 to-pastel-orange/20 rounded-full blur-xl"></div>
+            </div>
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
-          <p className="mt-2 text-gray-600">Create your account</p>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-pastel-pink via-pastel-orange to-pastel-purple bg-clip-text text-transparent mb-2">
+            VideoStream ✨
+          </h1>
+          <p className="text-lg text-gray-800 font-playful max-w-2xl mx-auto">
+            Join our community and start your journey! 🌟
+          </p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>
-              Create a new account to start watching and rating videos
+        <Card className="card-pastel border-2 border-pastel-pink/30 shadow-2xl shadow-pastel-pink/20">
+          <CardHeader className="text-center pb-6">
+            <CardTitle className="text-2xl font-playful font-bold text-foreground flex items-center justify-center">
+              <Sparkles className="h-5 w-5 mr-2 text-pastel-pink" />
+              Create Account
+              <Sparkles className="h-5 w-5 ml-2 text-pastel-pink" />
+            </CardTitle>
+            <CardDescription className="text-gray-700 font-playful text-base">
+              Create a new account to start watching and rating videos 🚀
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <CardContent className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
+                <div className="space-y-3">
+                  <Label
+                    htmlFor="firstName"
+                    className="text-gray-800 font-playful font-medium text-base"
+                  >
+                    First Name 👤
+                  </Label>
                   <Input
                     id="firstName"
                     type="text"
@@ -110,17 +148,27 @@ export function SignupForm() {
                         message: "First name must be at least 2 characters",
                       },
                     })}
-                    className={errors.firstName ? "border-destructive" : ""}
+                    className={`input-pastel font-playful text-gray-800 placeholder-gray-600 ${
+                      errors.firstName
+                        ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
+                        : ""
+                    }`}
                   />
                   {errors.firstName && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-red-500 font-playful flex items-center">
+                      <span className="mr-1">⚠️</span>
                       {errors.firstName.message}
                     </p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
+                <div className="space-y-3">
+                  <Label
+                    htmlFor="lastName"
+                    className="text-gray-800 font-playful font-medium text-base"
+                  >
+                    Last Name 👤
+                  </Label>
                   <Input
                     id="lastName"
                     type="text"
@@ -132,18 +180,28 @@ export function SignupForm() {
                         message: "Last name must be at least 2 characters",
                       },
                     })}
-                    className={errors.lastName ? "border-destructive" : ""}
+                    className={`input-pastel font-playful text-gray-800 placeholder-gray-600 ${
+                      errors.lastName
+                        ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
+                        : ""
+                    }`}
                   />
                   {errors.lastName && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-red-500 font-playful flex items-center">
+                      <span className="mr-1">⚠️</span>
                       {errors.lastName.message}
                     </p>
                   )}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="email"
+                  className="text-gray-800 font-playful font-medium text-base"
+                >
+                  Email Address 📧
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -155,17 +213,27 @@ export function SignupForm() {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`input-pastel font-playful text-gray-800 placeholder-gray-600 ${
+                    errors.email
+                      ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
+                      : ""
+                  }`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-red-500 font-playful flex items-center">
+                    <span className="mr-1">⚠️</span>
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="password"
+                  className="text-gray-800 font-playful font-medium text-base"
+                >
+                  Password 🔐
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -183,31 +251,39 @@ export function SignupForm() {
                           "Password must contain at least one uppercase letter, one lowercase letter, and one number",
                       },
                     })}
-                    className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
-                    }
+                    className={`input-pastel font-playful pr-12 text-gray-800 placeholder-gray-600 ${
+                      errors.password
+                        ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
+                        : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-pastel-pink hover:text-pastel-orange transition-colors duration-200"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-red-500 font-playful flex items-center">
+                    <span className="mr-1">⚠️</span>
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-gray-800 font-playful font-medium text-base"
+                >
+                  Confirm Password 🔐
+                </Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"
@@ -218,59 +294,64 @@ export function SignupForm() {
                       validate: (value) =>
                         value === password || "Passwords do not match",
                     })}
-                    className={
+                    className={`input-pastel font-playful pr-12 text-gray-800 placeholder-gray-600 ${
                       errors.confirmPassword
-                        ? "border-destructive pr-10"
-                        : "pr-10"
-                    }
+                        ? "border-red-300 focus:border-red-500 focus:ring-red-500/20"
+                        : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-pastel-pink hover:text-pastel-orange transition-colors duration-200"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-red-500 font-playful flex items-center">
+                    <span className="mr-1">⚠️</span>
                     {errors.confirmPassword.message}
                   </p>
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="btn-pill w-full bg-gradient-to-r from-pastel-pink to-pastel-orange text-white border-0 shadow-lg shadow-pastel-pink/30 hover:shadow-xl hover:shadow-pastel-pink/40 font-playful font-bold text-lg"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Creating account...
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                    Creating account... ✨
                   </>
                 ) : (
-                  "Create Account"
+                  "Create Account ✨"
                 )}
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="pt-6 border-t-2 border-pastel-pink/20">
+              <p className="text-center text-gray-700 font-playful">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-bold text-pastel-pink hover:text-pastel-orange transition-colors duration-300 underline decoration-2 underline-offset-4 hover:decoration-pastel-orange"
                 >
-                  Sign in here
+                  Sign in here ✨
                 </Link>
               </p>
             </div>
 
-            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-              <p className="text-xs text-blue-700">
+            <div className="p-4 bg-gradient-to-r from-pastel-blue/20 to-pastel-purple/20 rounded-2xl border-2 border-pastel-blue/30">
+              <p className="text-sm text-gray-700 font-playful text-center">
                 <strong>Note:</strong> Only consumers can register directly.
-                Creator accounts are created by administrators.
+                Creator accounts are created by administrators. 👑
               </p>
             </div>
           </CardContent>

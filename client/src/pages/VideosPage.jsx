@@ -12,6 +12,8 @@ import {
   ChevronLeft,
   ChevronRight,
   SlidersHorizontal,
+  Sparkles,
+  Film,
 } from "lucide-react";
 
 export function VideosPage() {
@@ -103,49 +105,61 @@ export function VideosPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Videos</h1>
-        <p className="text-gray-600 mt-2">
-          Discover and watch amazing content from our creators
+      <div className="text-center space-y-4 fade-in">
+        <div className="relative inline-block">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-pastel-blue via-pastel-purple to-pastel-pink bg-clip-text text-transparent">
+            Discover Videos ✨
+          </h1>
+          <div className="absolute -inset-4 bg-gradient-to-r from-pastel-blue/20 via-pastel-purple/20 to-pastel-pink/20 rounded-full blur-2xl -z-10"></div>
+        </div>
+        <p className="text-xl text-gray-800 font-playful max-w-2xl mx-auto">
+          Explore amazing content from our talented creators and find your next
+          favorite video! 🎬
         </p>
       </div>
 
       {/* Search and Filters */}
-      <div className="space-y-4 mb-8">
+      <div className="space-y-6 slide-up">
         {/* Search Bar */}
         <form onSubmit={handleSearch} className="flex gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-pastel-blue/60" />
             <Input
               type="text"
               placeholder="Search videos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="input-pastel pl-12 text-base font-playful text-gray-800 placeholder-gray-600"
             />
           </div>
-          <Button type="submit">Search</Button>
+          <Button
+            type="submit"
+            className="btn-pill bg-gradient-to-r from-pastel-blue to-pastel-purple text-white border-0 shadow-lg shadow-pastel-blue/30 hover:shadow-xl hover:shadow-pastel-blue/40 font-playful font-bold"
+          >
+            <Search className="h-5 w-5 mr-2" />
+            Search ✨
+          </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2"
+            className="btn-pill bg-white/80 hover:bg-white border-2 border-pastel-pink/30 text-pastel-pink hover:text-pastel-orange font-playful font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
           >
-            <SlidersHorizontal className="h-4 w-4" />
+            <SlidersHorizontal className="h-5 w-5 mr-2" />
             <span>Filters</span>
           </Button>
         </form>
 
         {/* Advanced Filters */}
         {showFilters && (
-          <Card>
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="card-pastel border-2 border-pastel-purple/30 shadow-xl shadow-pastel-purple/20 slide-up">
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Min Duration (seconds)
+                  <label className="block text-sm font-playful font-medium text-gray-800 mb-2">
+                    Min Duration (seconds) ⏱️
                   </label>
                   <Input
                     type="number"
@@ -154,11 +168,12 @@ export function VideosPage() {
                     onChange={(e) =>
                       setFilters({ ...filters, minDuration: e.target.value })
                     }
+                    className="input-pastel font-playful text-gray-800 placeholder-gray-600"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Max Duration (seconds)
+                  <label className="block text-sm font-playful font-medium text-gray-800 mb-2">
+                    Max Duration (seconds) ⏱️
                   </label>
                   <Input
                     type="number"
@@ -167,11 +182,12 @@ export function VideosPage() {
                     onChange={(e) =>
                       setFilters({ ...filters, maxDuration: e.target.value })
                     }
+                    className="input-pastel font-playful text-gray-800 placeholder-gray-600"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Start Date
+                  <label className="block text-sm font-playful font-medium text-gray-800 mb-2">
+                    Start Date 📅
                   </label>
                   <Input
                     type="date"
@@ -179,11 +195,12 @@ export function VideosPage() {
                     onChange={(e) =>
                       setFilters({ ...filters, startDate: e.target.value })
                     }
+                    className="input-pastel font-playful text-gray-800"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    End Date
+                  <label className="block text-sm font-playful font-medium text-gray-800 mb-2">
+                    End Date 📅
                   </label>
                   <Input
                     type="date"
@@ -191,15 +208,23 @@ export function VideosPage() {
                     onChange={(e) =>
                       setFilters({ ...filters, endDate: e.target.value })
                     }
+                    className="input-pastel font-playful text-gray-800"
                   />
                 </div>
               </div>
-              <div className="flex justify-between mt-4">
-                <Button variant="outline" onClick={clearFilters}>
-                  Clear Filters
+              <div className="flex justify-between mt-6">
+                <Button
+                  variant="outline"
+                  onClick={clearFilters}
+                  className="btn-pill bg-white/80 hover:bg-white border-2 border-pastel-orange/30 text-pastel-orange hover:text-pastel-pink font-playful font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                >
+                  Clear Filters 🗑️
                 </Button>
-                <Button onClick={() => updateFilters(filters)}>
-                  Apply Filters
+                <Button
+                  onClick={() => updateFilters(filters)}
+                  className="btn-pill bg-gradient-to-r from-pastel-pink to-pastel-orange text-white border-0 shadow-lg shadow-pastel-pink/30 hover:shadow-xl hover:shadow-pastel-pink/40 font-playful font-bold"
+                >
+                  Apply Filters ✨
                 </Button>
               </div>
             </CardContent>
@@ -210,61 +235,80 @@ export function VideosPage() {
       {/* Results */}
       {loading ? (
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <div className="relative">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-pastel-blue/30 border-t-pastel-blue"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-pastel-pink animate-ping"></div>
+          </div>
         </div>
       ) : error ? (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-600">{error}</p>
-        </div>
+        <Card className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-6">
+          <p className="text-red-600 font-playful text-center">{error}</p>
+        </Card>
       ) : videos.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Video className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+        <Card className="card-pastel text-center py-16 slide-up">
+          <CardContent className="space-y-6">
+            <div className="mx-auto p-6 bg-gradient-to-br from-pastel-blue/20 to-pastel-purple/20 rounded-full w-24 h-24 flex items-center justify-center">
+              <Film className="h-12 w-12 text-pastel-blue" />
+            </div>
+            <h3 className="text-2xl font-playful font-bold text-foreground">
               No videos found
             </h3>
-            <p className="text-gray-500 text-center">
+            <p className="text-foreground/70 font-playful text-lg max-w-md mx-auto">
               {filters.search
-                ? `No videos found matching "${filters.search}"`
-                : "No videos match your current filters"}
+                ? `No videos found matching "${filters.search}" 🔍`
+                : "No videos match your current filters. Try adjusting them! 🎯"}
             </p>
           </CardContent>
         </Card>
       ) : (
         <>
           {/* Results count */}
-          <div className="mb-6">
-            <p className="text-sm text-gray-600">
-              Showing {videos.length} of {pagination?.total || 0} videos
-              {filters.search && (
-                <span>
-                  {" "}
-                  for "<strong>{filters.search}</strong>"
-                </span>
-              )}
-            </p>
+          <div className="mb-8 slide-up">
+            <div className="bg-gradient-to-r from-pastel-blue/20 to-pastel-purple/20 rounded-2xl p-4 border border-pastel-blue/30">
+              <p className="text-gray-800 font-playful text-center">
+                <Sparkles className="h-4 w-4 inline mr-2 text-pastel-blue" />
+                Showing {videos.length} of {pagination?.total || 0} videos
+                {filters.search && (
+                  <span>
+                    {" "}
+                    for "
+                    <strong className="text-pastel-blue">
+                      {filters.search}
+                    </strong>
+                    "
+                  </span>
+                )}
+              </p>
+            </div>
           </div>
 
           {/* Video Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-            {videos.map((video) => (
-              <VideoCard key={video.id} video={video} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-8 slide-up">
+            {videos.map((video, index) => (
+              <div
+                key={video.id}
+                style={{ animationDelay: `${index * 0.1}s` }}
+                className="slide-up"
+              >
+                <VideoCard key={video.id} video={video} />
+              </div>
             ))}
           </div>
 
           {/* Pagination */}
           {pagination && pagination.pages > 1 && (
-            <div className="flex items-center justify-center space-x-2">
+            <div className="flex items-center justify-center space-x-3 slide-up">
               <Button
                 variant="outline"
                 onClick={() => handlePageChange(pagination.current - 1)}
                 disabled={pagination.current <= 1}
+                className="btn-pill bg-white/80 hover:bg-white border-2 border-pastel-blue/30 text-pastel-blue hover:text-pastel-purple font-playful font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <ChevronLeft className="h-4 w-4 mr-1" />
+                <ChevronLeft className="h-5 w-5 mr-2" />
                 Previous
               </Button>
 
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-2">
                 {[...Array(Math.min(5, pagination.pages))].map((_, i) => {
                   const pageNum = Math.max(1, pagination.current - 2) + i;
                   if (pageNum > pagination.pages) return null;
@@ -277,6 +321,11 @@ export function VideosPage() {
                       }
                       size="sm"
                       onClick={() => handlePageChange(pageNum)}
+                      className={`btn-pill font-playful font-medium ${
+                        pageNum === pagination.current
+                          ? "bg-gradient-to-r from-pastel-blue to-pastel-purple text-white border-0 shadow-lg shadow-pastel-blue/30"
+                          : "bg-white/80 hover:bg-white border-2 border-pastel-pink/30 text-pastel-pink hover:text-pastel-orange"
+                      } transition-all duration-300 hover:scale-105 hover:shadow-lg`}
                     >
                       {pageNum}
                     </Button>
@@ -288,9 +337,10 @@ export function VideosPage() {
                 variant="outline"
                 onClick={() => handlePageChange(pagination.current + 1)}
                 disabled={pagination.current >= pagination.pages}
+                className="btn-pill bg-white/80 hover:bg-white border-2 border-pastel-blue/30 text-pastel-blue hover:text-pastel-purple font-playful font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
-                <ChevronRight className="h-4 w-4 ml-1" />
+                <ChevronRight className="h-5 w-5 ml-2" />
               </Button>
             </div>
           )}
