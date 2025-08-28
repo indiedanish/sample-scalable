@@ -67,27 +67,41 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl"></div>
+
+      <div className="max-w-md w-full relative z-10 fade-in">
         <div className="text-center mb-8">
-          <div className="flex justify-center">
-            <Video className="h-12 w-12 text-primary" />
+          <div className="flex justify-center mb-4">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+              <div className="relative bg-gradient-to-br from-purple-600 to-pink-600 p-4 rounded-2xl">
+                <Video className="h-12 w-12 text-white" />
+              </div>
+            </div>
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
-          <p className="mt-2 text-gray-600">Sign in to your account</p>
+          <h1 className="text-4xl font-bold gradient-text mb-2">VideoStream</h1>
+          <p className="text-gray-300 text-lg">Sign in to your account</p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
+        <Card className="glass-card border-white/20 shadow-2xl">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-semibold text-white">
+              Sign In
+            </CardTitle>
+            <CardDescription className="text-gray-300">
               Enter your email and password to access your account
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-gray-200 font-medium">
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,17 +113,19 @@ export function LoginForm() {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`glass-input text-white placeholder-gray-400 ${
+                    errors.email ? "border-red-400/50" : ""
+                  }`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
-                    {errors.email.message}
-                  </p>
+                  <p className="text-sm text-red-400">{errors.email.message}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-gray-200 font-medium">
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -122,30 +138,34 @@ export function LoginForm() {
                         message: "Password must be at least 6 characters",
                       },
                     })}
-                    className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
-                    }
+                    className={`glass-input text-white placeholder-gray-400 pr-10 ${
+                      errors.password ? "border-red-400/50" : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-purple-400 transition-colors"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-red-400">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 glow-hover"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -157,12 +177,12 @@ export function LoginForm() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-400">
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-medium text-purple-400 hover:text-purple-300 transition-colors"
                 >
                   Sign up here
                 </Link>
@@ -170,8 +190,6 @@ export function LoginForm() {
             </div>
           </CardContent>
         </Card>
-
-
       </div>
     </div>
   );

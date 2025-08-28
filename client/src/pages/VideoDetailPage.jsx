@@ -208,7 +208,7 @@ export function VideoDetailPage() {
             <div className="text-red-500 mb-4">
               <Play className="h-12 w-12" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-gray-200 mb-2">
               Video not found
             </h3>
             <p className="text-gray-500 text-center mb-4">{error}</p>
@@ -252,7 +252,7 @@ export function VideoDetailPage() {
           <div className="space-y-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                <h1 className="text-2xl font-bold text-gray-200 mb-2">
                   {video.title}
                 </h1>
                 <div className="flex items-center space-x-4 text-sm text-gray-500">
@@ -309,7 +309,7 @@ export function VideoDetailPage() {
                 </AvatarFallback>
               </Avatar>
               <div>
-                <div className="font-medium text-gray-900">
+                <div className="font-medium text-gray-200">
                   {video.creator
                     ? `${video.creator.firstName} ${video.creator.lastName}`
                     : "Unknown Creator"}
@@ -351,7 +351,7 @@ export function VideoDetailPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-gray-900">
+                  <div className="text-3xl font-bold text-gray-200">
                     {ratingStats.averageRating
                       ? ratingStats.averageRating.toFixed(1)
                       : "No ratings"}

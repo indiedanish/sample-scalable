@@ -112,7 +112,7 @@ export function UsersPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Users className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-lg font-medium text-gray-200 mb-2">
               Access Denied
             </h3>
             <p className="text-gray-500 text-center">
@@ -130,7 +130,7 @@ export function UsersPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-gray-200">
               User Management
             </h1>
             <p className="text-gray-600 mt-2">
@@ -213,7 +213,7 @@ export function UsersPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-gray-200">
                         {userData.firstName} {userData.lastName}
                       </div>
                       <div className="flex items-center space-x-2 text-sm text-gray-500">

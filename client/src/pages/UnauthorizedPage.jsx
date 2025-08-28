@@ -11,7 +11,7 @@ export function UnauthorizedPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <ShieldX className="h-16 w-16 text-red-500 mb-6" />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-gray-200 mb-2">
               Access Denied
             </h1>
             <p className="text-gray-600 text-center mb-6">

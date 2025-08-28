@@ -65,108 +65,139 @@ export function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur opacity-75 animate-pulse"></div>
+          <div className="relative animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400"></div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Welcome Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
-          Welcome back, {user?.firstName}!
+      <div className="text-center slide-up">
+        <h1 className="text-4xl font-bold gradient-text mb-4">
+          Welcome back, {user?.firstName}! 👋
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
           {user?.role === "ADMIN" &&
-            "Manage your platform and oversee all content."}
-          {user?.role === "CREATOR" && "Create and manage your video content."}
-          {user?.role === "CONSUMER" && "Discover and enjoy amazing videos."}
+            "Manage your platform and oversee all content with powerful admin tools."}
+          {user?.role === "CREATOR" &&
+            "Create and manage your video content with creative freedom."}
+          {user?.role === "CONSUMER" &&
+            "Discover and enjoy amazing videos from talented creators."}
         </p>
       </div>
 
       {/* Stats Cards - for CREATOR and ADMIN */}
       {stats && hasRole("CREATOR") && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 slide-up">
+          <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium text-gray-200">
                 Total Videos
               </CardTitle>
-              <Video className="h-4 w-4 text-muted-foreground" />
+              <div className="p-2 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg">
+                <Video className="h-4 w-4 text-purple-400" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalVideos || 0}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-bold text-white mb-1">
+                {stats.totalVideos || 0}
+              </div>
+              <p className="text-xs text-gray-400">
                 +{stats.videosThisMonth || 0} this month
               </p>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-gray-200">
+                Total Users
+              </CardTitle>
+              <div className="p-2 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg">
+                <Users className="h-4 w-4 text-blue-400" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalUsers || 0}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-3xl font-bold text-white mb-1">
+                {stats.totalUsers || 0}
+              </div>
+              <p className="text-xs text-gray-400">
                 +{stats.newUsersThisMonth || 0} this month
               </p>
             </CardContent>
           </Card>
 
           {hasRole("ADMIN") && (
-            <Card>
+            <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Creators</CardTitle>
-                <Upload className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium text-gray-200">
+                  Creators
+                </CardTitle>
+                <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg">
+                  <Upload className="h-4 w-4 text-green-400" />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
+                <div className="text-3xl font-bold text-white mb-1">
                   {stats.totalCreators || 0}
                 </div>
-                <p className="text-xs text-muted-foreground">Active creators</p>
+                <p className="text-xs text-gray-400">Active creators</p>
               </CardContent>
             </Card>
           )}
 
-          <Card>
+          <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Views</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium text-gray-200">
+                Total Views
+              </CardTitle>
+              <div className="p-2 bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-lg">
+                <TrendingUp className="h-4 w-4 text-pink-400" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalViews || 0}</div>
-              <p className="text-xs text-muted-foreground">All time views</p>
+              <div className="text-3xl font-bold text-white mb-1">
+                {stats.totalViews || 0}
+              </div>
+              <p className="text-xs text-gray-400">All time views</p>
             </CardContent>
           </Card>
         </div>
       )}
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="hover:shadow-md transition-shadow cursor-pointer">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 slide-up">
+        <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover cursor-pointer group">
           <Link to="/videos">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Play className="h-5 w-5" />
-                <span>Browse Videos</span>
+              <CardTitle className="flex items-center space-x-3 text-white group-hover:text-purple-300 transition-colors">
+                <div className="p-2 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-lg">
+                  <Play className="h-5 w-5 text-purple-400" />
+                </div>
+                <span>Search Videos</span>
               </CardTitle>
-              <CardDescription>Explore all available videos</CardDescription>
+              <CardDescription className="text-gray-300">
+                Explore all available videos
+              </CardDescription>
             </CardHeader>
           </Link>
         </Card>
 
         {hasRole("CREATOR") && (
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
+          <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover cursor-pointer group">
             <Link to="/upload">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Plus className="h-5 w-5" />
-                  <span>Upload Video</span>
+                <CardTitle className="flex items-center space-x-3 text-white group-hover:text-purple-300 transition-colors">
+                  <div className="p-2 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-lg">
+                    <Plus className="h-5 w-5 text-green-400" />
+                  </div>
+                  <span>Add Video</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-gray-300">
                   Share your content with the world
                 </CardDescription>
               </CardHeader>
@@ -175,14 +206,18 @@ export function DashboardPage() {
         )}
 
         {hasRole("ADMIN") && (
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
+          <Card className="glass-card border-white/20 hover:border-purple-500/30 transition-all duration-300 glow-hover cursor-pointer group">
             <Link to="/users">
               <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Users className="h-5 w-5" />
+                <CardTitle className="flex items-center space-x-3 text-white group-hover:text-purple-300 transition-colors">
+                  <div className="p-2 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg">
+                    <Users className="h-5 w-5 text-blue-400" />
+                  </div>
                   <span>Manage Users</span>
                 </CardTitle>
-                <CardDescription>Administer user accounts</CardDescription>
+                <CardDescription className="text-gray-300">
+                  Administer user accounts
+                </CardDescription>
               </CardHeader>
             </Link>
           </Card>
@@ -190,38 +225,44 @@ export function DashboardPage() {
       </div>
 
       {/* Latest Videos */}
-      <div className="space-y-6">
+      <div className="space-y-6 slide-up">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Latest Videos</h2>
+          <h2 className="text-3xl font-bold gradient-text">Latest Videos</h2>
           <Link to="/videos">
-            <Button variant="outline" className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              className="glass border-white/20 hover:border-purple-500/30 text-white hover:text-purple-300 transition-all duration-300 glow-hover"
+            >
               <span>View All</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </Link>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-4">
-            <p className="text-red-600">{error}</p>
+          <div className="glass-card border-red-500/30 p-4">
+            <p className="text-red-400">{error}</p>
           </div>
         )}
 
         {videos.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Video className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <Card className="glass-card border-white/20">
+            <CardContent className="flex flex-col items-center justify-center py-16">
+              <div className="relative mb-6">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur opacity-75"></div>
+                <Video className="relative h-16 w-16 text-purple-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">
                 No videos yet
               </h3>
-              <p className="text-gray-500 text-center mb-4">
+              <p className="text-gray-300 text-center mb-6 max-w-md">
                 {hasRole("CREATOR")
-                  ? "Start by uploading your first video!"
-                  : "No videos have been uploaded yet."}
+                  ? "Start by uploading your first video and share your creativity with the world!"
+                  : "No videos have been uploaded yet. Check back soon for amazing content!"}
               </p>
               {hasRole("CREATOR") && (
                 <Link to="/upload">
-                  <Button>
+                  <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 glow-hover">
                     <Plus className="h-4 w-4 mr-2" />
                     Upload Video
                   </Button>
@@ -231,8 +272,14 @@ export function DashboardPage() {
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {videos.map((video) => (
-              <VideoCard key={video.id} video={video} />
+            {videos.map((video, index) => (
+              <div
+                key={video.id}
+                style={{ animationDelay: `${index * 100}ms` }}
+                className="slide-up"
+              >
+                <VideoCard video={video} />
+              </div>
             ))}
           </div>
         )}
