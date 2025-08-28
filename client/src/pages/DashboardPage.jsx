@@ -19,6 +19,10 @@ import {
   Play,
   Plus,
   ArrowRight,
+  Sparkles,
+  BarChart3,
+  Eye,
+  Clock,
 } from "lucide-react";
 
 export function DashboardPage() {
@@ -65,176 +69,247 @@ export function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary-200 border-t-primary-600"></div>
+          <p className="text-muted-foreground font-medium">
+            Loading your dashboard...
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto space-y-8">
       {/* Welcome Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+      <div className="text-center space-y-4">
+        <div className="flex justify-center mb-4">
+          <div className="relative">
+            <div className="bg-gradient-to-br from-primary-500 to-secondary-600 p-3 rounded-full shadow-material-3">
+              <Sparkles className="h-8 w-8 text-white" />
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent-500 rounded-full animate-pulse"></div>
+          </div>
+        </div>
+        <h1 className="font-nunito font-black text-4xl bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
           Welcome back, {user?.firstName}!
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
           {user?.role === "ADMIN" &&
-            "Manage your platform and oversee all content."}
-          {user?.role === "CREATOR" && "Create and manage your video content."}
-          {user?.role === "CONSUMER" && "Discover and enjoy amazing videos."}
+            "Manage your platform and oversee all content with powerful admin tools."}
+          {user?.role === "CREATOR" &&
+            "Create and manage your video content with creative freedom."}
+          {user?.role === "CONSUMER" &&
+            "Discover and enjoy amazing videos from talented creators."}
         </p>
       </div>
 
       {/* Stats Cards - for CREATOR and ADMIN */}
       {stats && hasRole("CREATOR") && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-semibold text-primary-800">
                 Total Videos
               </CardTitle>
-              <Video className="h-4 w-4 text-muted-foreground" />
+              <div className="bg-primary-500 p-2 rounded-lg">
+                <Video className="h-4 w-4 text-white" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalVideos || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                +{stats.videosThisMonth || 0} this month
+              <div className="text-3xl font-bold text-primary-900">
+                {stats.totalVideos || 0}
+              </div>
+              <p className="text-xs text-primary-700 font-medium">
+                Your content library
               </p>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+          <Card className="bg-gradient-to-br from-secondary-50 to-secondary-100 border-secondary-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-semibold text-secondary-800">
+                Total Views
+              </CardTitle>
+              <div className="bg-secondary-500 p-2 rounded-lg">
+                <Eye className="h-4 w-4 text-white" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalUsers || 0}</div>
-              <p className="text-xs text-muted-foreground">
-                +{stats.newUsersThisMonth || 0} this month
+              <div className="text-3xl font-bold text-secondary-900">
+                {stats.totalViews || 0}
+              </div>
+              <p className="text-xs text-secondary-700 font-medium">
+                Audience engagement
               </p>
             </CardContent>
           </Card>
 
-          {hasRole("ADMIN") && (
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Creators</CardTitle>
-                <Upload className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {stats.totalCreators || 0}
-                </div>
-                <p className="text-xs text-muted-foreground">Active creators</p>
-              </CardContent>
-            </Card>
-          )}
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Views</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          <Card className="bg-gradient-to-br from-accent-50 to-accent-100 border-accent-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-semibold text-accent-800">
+                Recent Activity
+              </CardTitle>
+              <div className="bg-accent-500 p-2 rounded-lg">
+                <Clock className="h-4 w-4 text-white" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalViews || 0}</div>
-              <p className="text-xs text-muted-foreground">All time views</p>
+              <div className="text-3xl font-bold text-accent-900">
+                {stats.recentVideos || 0}
+              </div>
+              <p className="text-xs text-accent-700 font-medium">This month</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-primary-50 to-secondary-50 border-primary-200">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+              <CardTitle className="text-sm font-semibold text-primary-800">
+                Performance
+              </CardTitle>
+              <div className="bg-gradient-to-br from-primary-500 to-secondary-500 p-2 rounded-lg">
+                <BarChart3 className="h-4 w-4 text-white" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-primary-900">
+                {stats.avgViews || 0}
+              </div>
+              <p className="text-xs text-primary-700 font-medium">
+                Avg. views per video
+              </p>
             </CardContent>
           </Card>
         </div>
       )}
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card className="hover:shadow-md transition-shadow cursor-pointer">
-          <Link to="/videos">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Play className="h-5 w-5" />
-                <span>Browse Videos</span>
-              </CardTitle>
-              <CardDescription>Explore all available videos</CardDescription>
-            </CardHeader>
-          </Link>
-        </Card>
-
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {hasRole("CREATOR") && (
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <Link to="/upload">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Plus className="h-5 w-5" />
-                  <span>Upload Video</span>
-                </CardTitle>
-                <CardDescription>
-                  Share your content with the world
-                </CardDescription>
-              </CardHeader>
-            </Link>
+          <Card className="bg-gradient-to-br from-primary-50 to-primary-100 border-primary-200 hover:shadow-material-4 transition-all duration-300">
+            <CardHeader className="text-center pb-4">
+              <div className="bg-primary-500 p-3 rounded-full w-16 h-16 mx-auto mb-3">
+                <Upload className="h-8 w-8 text-white" />
+              </div>
+              <CardTitle className="text-xl font-bold text-primary-900">
+                Upload Video
+              </CardTitle>
+              <CardDescription className="text-primary-700">
+                Share your latest creation with the world
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button
+                asChild
+                className="w-full bg-primary-600 hover:bg-primary-700 shadow-material-2 hover:shadow-material-4"
+              >
+                <Link to="/upload">
+                  <Plus className="h-5 w-5 mr-2" />
+                  Start Uploading
+                </Link>
+              </Button>
+            </CardContent>
           </Card>
         )}
 
+        <Card className="bg-gradient-to-br from-secondary-50 to-secondary-100 border-secondary-200 hover:shadow-material-4 transition-all duration-300">
+          <CardHeader className="text-center pb-4">
+            <div className="bg-secondary-500 p-3 rounded-full w-16 h-16 mx-auto mb-3">
+              <Video className="h-8 w-8 text-white" />
+            </div>
+            <CardTitle className="text-xl font-bold text-secondary-900">
+              Browse Videos
+            </CardTitle>
+            <CardDescription className="text-secondary-700">
+              Discover amazing content from creators
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-center">
+            <Button
+              asChild
+              variant="secondary"
+              className="w-full shadow-material-2 hover:shadow-material-4"
+            >
+              <Link to="/videos">
+                <Play className="h-5 w-5 mr-2" />
+                Explore Videos
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+
         {hasRole("ADMIN") && (
-          <Card className="hover:shadow-md transition-shadow cursor-pointer">
-            <Link to="/users">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Users className="h-5 w-5" />
-                  <span>Manage Users</span>
-                </CardTitle>
-                <CardDescription>Administer user accounts</CardDescription>
-              </CardHeader>
-            </Link>
+          <Card className="bg-gradient-to-br from-accent-50 to-accent-100 border-accent-200 hover:shadow-material-4 transition-all duration-300">
+            <CardHeader className="text-center pb-4">
+              <div className="bg-accent-500 p-3 rounded-full w-16 h-16 mx-auto mb-3">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <CardTitle className="text-xl font-bold text-accent-900">
+                Manage Users
+              </CardTitle>
+              <CardDescription className="text-accent-700">
+                Oversee platform users and permissions
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button
+                asChild
+                variant="accent"
+                className="w-full shadow-material-2 hover:shadow-material-4"
+              >
+                <Link to="/users">
+                  <Users className="h-5 w-5 mr-2" />
+                  Manage Users
+                </Link>
+              </Button>
+            </CardContent>
           </Card>
         )}
       </div>
 
-      {/* Latest Videos */}
+      {/* Latest Videos Section */}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Latest Videos</h2>
-          <Link to="/videos">
-            <Button variant="outline" className="flex items-center space-x-2">
-              <span>View All</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
+          <div>
+            <h2 className="text-2xl font-bold text-foreground">
+              Latest Videos
+            </h2>
+            <p className="text-muted-foreground">Fresh content just for you</p>
+          </div>
+          <Button asChild variant="outline" className="group">
+            <Link to="/videos">
+              View All
+              <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+            </Link>
+          </Button>
         </div>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-4">
-            <p className="text-red-600">{error}</p>
-          </div>
-        )}
-
-        {videos.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Video className="h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                No videos yet
-              </h3>
-              <p className="text-gray-500 text-center mb-4">
-                {hasRole("CREATOR")
-                  ? "Start by uploading your first video!"
-                  : "No videos have been uploaded yet."}
-              </p>
-              {hasRole("CREATOR") && (
-                <Link to="/upload">
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Upload Video
-                  </Button>
-                </Link>
-              )}
-            </CardContent>
-          </Card>
-        ) : (
+        {videos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {videos.map((video) => (
               <VideoCard key={video.id} video={video} />
             ))}
           </div>
+        ) : (
+          <Card className="text-center py-12">
+            <div className="bg-muted p-4 rounded-full w-16 h-16 mx-auto mb-4">
+              <Video className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              No videos yet
+            </h3>
+            <p className="text-muted-foreground mb-4">
+              Be the first to upload a video and start building your audience!
+            </p>
+            {hasRole("CREATOR") && (
+              <Button asChild>
+                <Link to="/upload">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Upload First Video
+                </Link>
+              </Button>
+            )}
+          </Card>
         )}
       </div>
     </div>

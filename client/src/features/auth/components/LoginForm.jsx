@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Video, Eye, EyeOff } from "lucide-react";
+import { Video, Eye, EyeOff, Sparkles, Play } from "lucide-react";
 
 export function LoginForm() {
   const { login: authLogin } = useAuth();
@@ -67,27 +67,47 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <div className="text-center mb-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-4">
           <div className="flex justify-center">
-            <Video className="h-12 w-12 text-primary" />
+            <div className="relative">
+              <div className="bg-gradient-to-br from-primary-500 to-secondary-600 p-4 rounded-full shadow-material-4">
+                <Video className="h-12 w-12 text-white" />
+              </div>
+              <div className="absolute -top-2 -right-2">
+                <Sparkles className="h-6 w-6 text-accent-500 animate-pulse" />
+              </div>
+            </div>
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
-          <p className="mt-2 text-gray-600">Sign in to your account</p>
+          <div className="space-y-2">
+            <h1 className="font-nunito font-black text-4xl bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+              VideoStream
+            </h1>
+            <p className="text-lg text-muted-foreground font-medium">
+              Sign in to your account
+            </p>
+          </div>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
-              Enter your email and password to access your account
+        {/* Login Form Card */}
+        <Card className="shadow-material-4 border-0 overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500"></div>
+          <CardHeader className="text-center pb-4">
+            <CardTitle className="text-2xl font-bold text-foreground">
+              Welcome Back
+            </CardTitle>
+            <CardDescription className="text-muted-foreground">
+              Enter your credentials to access your premium content
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <CardContent className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-foreground">
+                  Email Address
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,17 +119,21 @@ export function LoginForm() {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`${
+                    errors.email ? "border-destructive ring-destructive" : ""
+                  } focus:border-primary focus:ring-primary`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive font-medium">
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-foreground">
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -122,47 +146,56 @@ export function LoginForm() {
                         message: "Password must be at least 6 characters",
                       },
                     })}
-                    className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
-                    }
+                    className={`${
+                      errors.password
+                        ? "border-destructive ring-destructive pr-12"
+                        : "pr-12"
+                    } focus:border-primary focus:ring-primary`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive font-medium">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full h-12 text-base font-semibold shadow-material-2 hover:shadow-material-4"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                     Signing in...
                   </>
                 ) : (
-                  "Sign In"
+                  <>
+                    <Play className="h-5 w-5 mr-2" />
+                    Sign In
+                  </>
                 )}
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="text-center pt-4">
+              <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-semibold text-primary hover:text-primary-600 transition-colors duration-200 hover:underline"
                 >
                   Sign up here
                 </Link>
@@ -171,7 +204,18 @@ export function LoginForm() {
           </CardContent>
         </Card>
 
-
+        {/* Decorative elements */}
+        <div className="flex justify-center space-x-4">
+          <div className="w-2 h-2 bg-primary-400 rounded-full animate-bounce"></div>
+          <div
+            className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce"
+            style={{ animationDelay: "0.1s" }}
+          ></div>
+          <div
+            className="w-2 h-2 bg-accent-400 rounded-full animate-bounce"
+            style={{ animationDelay: "0.2s" }}
+          ></div>
+        </div>
       </div>
     </div>
   );
