@@ -73,7 +73,7 @@ export function LoginForm() {
           <div className="flex justify-center">
             <Video className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
+          <h1 className="mt-4 text-3xl font-bold text-gray-900">RSharing</h1>
           <p className="mt-2 text-gray-600">Sign in to your account</p>
         </div>
 
@@ -170,8 +170,6 @@ export function LoginForm() {
             </div>
           </CardContent>
         </Card>
-
-
       </div>
     </div>
   );

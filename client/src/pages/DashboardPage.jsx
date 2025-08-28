@@ -151,7 +151,7 @@ export function DashboardPage() {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Play className="h-5 w-5" />
-                <span>Browse Videos</span>
+                <span>Search Videos</span>
               </CardTitle>
               <CardDescription>Explore all available videos</CardDescription>
             </CardHeader>
@@ -164,7 +164,7 @@ export function DashboardPage() {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Plus className="h-5 w-5" />
-                  <span>Upload Video</span>
+                  <span>Add Video</span>
                 </CardTitle>
                 <CardDescription>
                   Share your content with the world

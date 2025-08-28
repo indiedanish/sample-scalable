@@ -65,7 +65,7 @@ export function Navbar() {
               <Link to="/dashboard" className="flex items-center space-x-2">
                 <Video className="h-8 w-8 text-primary" />
                 <span className="font-bold text-xl text-gray-900">
-                  VideoStream
+                  RSharing
                 </span>
               </Link>
             </div>
