@@ -83,7 +83,7 @@ export function LoginForm() {
           </div>
           <div className="space-y-2">
             <h1 className="font-nunito font-black text-4xl bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-              VideoStream
+              SB Viz
             </h1>
             <p className="text-lg text-muted-foreground font-medium">
               Sign in to your account

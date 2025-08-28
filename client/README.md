@@ -268,7 +268,7 @@ Create a `.env.local` file for local development:
 
 ```env
 VITE_API_BASE_URL=http://localhost:3001
-VITE_APP_NAME=VideoStream
+VITE_APP_NAME=SB Viz
 ```
 
 ### Tailwind Configuration

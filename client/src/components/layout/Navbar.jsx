@@ -76,7 +76,7 @@ export function Navbar() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-nunito font-black text-2xl text-white group-hover:text-accent-300 transition-colors duration-300">
-                    VideoStream
+                    SB Viz
                   </span>
                   <span className="text-xs text-primary-100 font-medium">
                     Premium Content

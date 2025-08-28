@@ -81,29 +81,6 @@ export function DashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
-      {/* Welcome Header */}
-      <div className="text-center space-y-4">
-        <div className="flex justify-center mb-4">
-          <div className="relative">
-            <div className="bg-gradient-to-br from-primary-500 to-secondary-600 p-3 rounded-full shadow-material-3">
-              <Sparkles className="h-8 w-8 text-white" />
-            </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-accent-500 rounded-full animate-pulse"></div>
-          </div>
-        </div>
-        <h1 className="font-nunito font-black text-4xl bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-          Welcome back, {user?.firstName}!
-        </h1>
-        <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
-          {user?.role === "ADMIN" &&
-            "Manage your platform and oversee all content with powerful admin tools."}
-          {user?.role === "CREATOR" &&
-            "Create and manage your video content with creative freedom."}
-          {user?.role === "CONSUMER" &&
-            "Discover and enjoy amazing videos from talented creators."}
-        </p>
-      </div>
-
       {/* Stats Cards - for CREATOR and ADMIN */}
       {stats && hasRole("CREATOR") && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
