@@ -14,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Video, Eye, EyeOff } from "lucide-react";
+import { Video, Eye, EyeOff, Sparkles } from "lucide-react";
 
 export function LoginForm() {
   const { login: authLogin } = useAuth();
@@ -67,27 +67,47 @@ export function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <div className="flex justify-center">
-            <Video className="h-12 w-12 text-primary" />
+        {/* Hero Section */}
+        <div className="text-center mb-12 fade-in">
+          <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="h-4 w-4" />
+            <span>Welcome back</span>
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
-          <p className="mt-2 text-gray-600">Sign in to your account</p>
+
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <Video className="h-16 w-16 text-primary" />
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-60"></div>
+            </div>
+          </div>
+
+          <h1 className="text-4xl font-bold text-foreground mb-4 tracking-tight">
+            RJ-Reels
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Sign in to your account
+          </p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-            <CardDescription>
+        {/* Login Form */}
+        <Card className="card-modern border-0 shadow-xl">
+          <CardHeader className="text-center pb-6">
+            <CardTitle className="text-2xl font-semibold">Sign In</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Enter your email and password to access your account
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+          <CardContent className="px-8 pb-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-3">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,17 +119,24 @@ export function LoginForm() {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`input-modern ${
+                    errors.email ? "border-destructive" : ""
+                  }`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive mt-2">
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -122,33 +149,37 @@ export function LoginForm() {
                         message: "Password must be at least 6 characters",
                       },
                     })}
-                    className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
-                    }
+                    className={`input-modern pr-12 ${
+                      errors.password ? "border-destructive" : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive mt-2">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="btn-primary w-full py-3 text-base font-medium rounded-xl"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
                     Signing in...
                   </>
                 ) : (
@@ -157,12 +188,12 @@ export function LoginForm() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
                 <Link
                   to="/signup"
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-medium text-primary hover:text-primary/80 transition-colors duration-200"
                 >
                   Sign up here
                 </Link>
@@ -170,8 +201,6 @@ export function LoginForm() {
             </div>
           </CardContent>
         </Card>
-
-
       </div>
     </div>
   );

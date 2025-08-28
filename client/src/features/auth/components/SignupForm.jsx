@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Video, Eye, EyeOff, CheckCircle } from "lucide-react";
+import { Video, Eye, EyeOff, CheckCircle, Sparkles } from "lucide-react";
 
 export function SignupForm() {
   const navigate = useNavigate();
@@ -77,28 +77,46 @@ export function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <div className="flex justify-center">
-            <Video className="h-12 w-12 text-primary" />
+        {/* Hero Section */}
+        <div className="text-center mb-12 fade-in">
+          <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="h-4 w-4" />
+            <span>Join us</span>
           </div>
-          <h1 className="mt-4 text-3xl font-bold text-gray-900">VideoStream</h1>
-          <p className="mt-2 text-gray-600">Create your account</p>
+
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <Video className="h-16 w-16 text-primary" />
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-60"></div>
+            </div>
+          </div>
+
+          <h1 className="text-4xl font-bold text-foreground mb-4 tracking-tight">
+            RJ-Reels
+          </h1>
+          <p className="text-lg text-muted-foreground">Create your account</p>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>
+        {/* Signup Form */}
+        <Card className="card-modern border-0 shadow-xl">
+          <CardHeader className="text-center pb-6">
+            <CardTitle className="text-2xl font-semibold">Sign Up</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Create a new account to start watching and rating videos
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <CardContent className="px-8 pb-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
+                <div className="space-y-3">
+                  <Label
+                    htmlFor="firstName"
+                    className="text-sm font-medium text-foreground"
+                  >
+                    First Name
+                  </Label>
                   <Input
                     id="firstName"
                     type="text"
@@ -110,17 +128,24 @@ export function SignupForm() {
                         message: "First name must be at least 2 characters",
                       },
                     })}
-                    className={errors.firstName ? "border-destructive" : ""}
+                    className={`input-modern ${
+                      errors.firstName ? "border-destructive" : ""
+                    }`}
                   />
                   {errors.firstName && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-destructive mt-2">
                       {errors.firstName.message}
                     </p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
+                <div className="space-y-3">
+                  <Label
+                    htmlFor="lastName"
+                    className="text-sm font-medium text-foreground"
+                  >
+                    Last Name
+                  </Label>
                   <Input
                     id="lastName"
                     type="text"
@@ -132,18 +157,25 @@ export function SignupForm() {
                         message: "Last name must be at least 2 characters",
                       },
                     })}
-                    className={errors.lastName ? "border-destructive" : ""}
+                    className={`input-modern ${
+                      errors.lastName ? "border-destructive" : ""
+                    }`}
                   />
                   {errors.lastName && (
-                    <p className="text-sm text-destructive">
+                    <p className="text-sm text-destructive mt-2">
                       {errors.lastName.message}
                     </p>
                   )}
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="email"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Email
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -155,17 +187,24 @@ export function SignupForm() {
                       message: "Invalid email address",
                     },
                   })}
-                  className={errors.email ? "border-destructive" : ""}
+                  className={`input-modern ${
+                    errors.email ? "border-destructive" : ""
+                  }`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive mt-2">
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -177,37 +216,37 @@ export function SignupForm() {
                         value: 6,
                         message: "Password must be at least 6 characters",
                       },
-                      pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                        message:
-                          "Password must contain at least one uppercase letter, one lowercase letter, and one number",
-                      },
                     })}
-                    className={
-                      errors.password ? "border-destructive pr-10" : "pr-10"
-                    }
+                    className={`input-modern pr-12 ${
+                      errors.password ? "border-destructive" : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive mt-2">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="space-y-3">
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-sm font-medium text-foreground"
+                >
+                  Confirm Password
+                </Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"
@@ -218,35 +257,37 @@ export function SignupForm() {
                       validate: (value) =>
                         value === password || "Passwords do not match",
                     })}
-                    className={
-                      errors.confirmPassword
-                        ? "border-destructive pr-10"
-                        : "pr-10"
-                    }
+                    className={`input-modern pr-12 ${
+                      errors.confirmPassword ? "border-destructive" : ""
+                    }`}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4 text-gray-400" />
+                      <EyeOff className="h-5 w-5" />
                     ) : (
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-5 w-5" />
                     )}
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-destructive mt-2">
                     {errors.confirmPassword.message}
                   </p>
                 )}
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="btn-primary w-full py-3 text-base font-medium rounded-xl"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
                     Creating account...
                   </>
                 ) : (
@@ -255,22 +296,15 @@ export function SignupForm() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="mt-8 text-center">
+              <p className="text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="font-medium text-primary hover:text-primary/80"
+                  className="font-medium text-primary hover:text-primary/80 transition-colors duration-200"
                 >
                   Sign in here
                 </Link>
-              </p>
-            </div>
-
-            <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-              <p className="text-xs text-blue-700">
-                <strong>Note:</strong> Only consumers can register directly.
-                Creator accounts are created by administrators.
               </p>
             </div>
           </CardContent>
