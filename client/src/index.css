@@ -2,50 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Merriweather:wght@300;400;700&family=Roboto+Mono:wght@400;500;600&display=swap');
+
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
+        /* Retro Newspaper Theme Colors */
+        --background: 45 33% 97%;
+        /* Cream/off-white */
+        --foreground: 0 0% 0%;
+        /* Pure black */
         --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
+        /* Pure white */
+        --card-foreground: 0 0% 0%;
         --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --primary: 221.2 83.2% 53.3%;
-        --primary-foreground: 210 40% 98%;
-        --secondary: 210 40% 96%;
-        --secondary-foreground: 222.2 84% 4.9%;
-        --muted: 210 40% 96%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96%;
-        --accent-foreground: 222.2 84% 4.9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 221.2 83.2% 53.3%;
-        --radius: 0.75rem;
+        --popover-foreground: 0 0% 0%;
+        --primary: 0 50% 40%;
+        /* Muted red */
+        --primary-foreground: 0 0% 100%;
+        --secondary: 220 50% 25%;
+        /* Navy blue */
+        --secondary-foreground: 0 0% 100%;
+        --muted: 0 0% 90%;
+        /* Light gray */
+        --muted-foreground: 0 0% 40%;
+        --accent: 35 50% 60%;
+        /* Sepia */
+        --accent-foreground: 0 0% 0%;
+        --destructive: 0 70% 50%;
+        /* Bright red */
+        --destructive-foreground: 0 0% 100%;
+        --border: 0 0% 0%;
+        /* Black borders */
+        --input: 0 0% 0%;
+        --ring: 0 50% 40%;
+        --radius: 0;
+        /* No rounded corners */
     }
 
     .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
-        --primary: 217.2 91.2% 59.8%;
-        --primary-foreground: 222.2 84% 4.9%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 224.3 76.3% 94.1%;
+        --background: 0 0% 10%;
+        /* Very dark gray */
+        --foreground: 0 0% 95%;
+        --card: 0 0% 15%;
+        --card-foreground: 0 0% 95%;
+        --popover: 0 0% 15%;
+        --popover-foreground: 0 0% 95%;
+        --primary: 0 50% 50%;
+        --primary-foreground: 0 0% 0%;
+        --secondary: 220 50% 35%;
+        --secondary-foreground: 0 0% 95%;
+        --muted: 0 0% 20%;
+        --muted-foreground: 0 0% 70%;
+        --accent: 35 50% 70%;
+        --accent-foreground: 0 0% 0%;
+        --destructive: 0 70% 60%;
+        --destructive-foreground: 0 0% 0%;
+        --border: 0 0% 30%;
+        --input: 0 0% 30%;
+        --ring: 0 50% 50%;
     }
 }
 
@@ -56,5 +70,172 @@
 
     body {
         @apply bg-background text-foreground;
+        font-family: 'Merriweather', serif;
+        background-image:
+            radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.02) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.02) 0%, transparent 50%);
+        background-size: 100px 100px;
+    }
+
+    /* Typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+    }
+
+    .newspaper-headline {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
+        font-size: 2.5rem;
+        line-height: 1.1;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        border-bottom: 3px solid black;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .newspaper-subhead {
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+        font-size: 1.25rem;
+        line-height: 1.3;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid black;
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .newspaper-body {
+        font-family: 'Merriweather', serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: justify;
+    }
+
+    .newspaper-caption {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: hsl(var(--muted-foreground));
+    }
+
+    /* Grid Layout */
+    .newspaper-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .newspaper-column {
+        border-right: 1px solid black;
+        padding-right: 2rem;
+    }
+
+    .newspaper-column:last-child {
+        border-right: none;
+    }
+
+    /* Separators */
+    .newspaper-separator {
+        height: 2px;
+        background: repeating-linear-gradient(to right,
+                black 0,
+                black 4px,
+                transparent 4px,
+                transparent 8px);
+        margin: 2rem 0;
+    }
+
+    .newspaper-divider {
+        height: 1px;
+        background: black;
+        margin: 1.5rem 0;
+    }
+}
+
+@layer components {
+
+    /* Button Styles */
+    .btn-newspaper {
+        @apply bg-white border-2 border-black text-black font-bold uppercase tracking-wider px-6 py-3;
+        font-family: 'Roboto Mono', monospace;
+        transition: all 0.2s ease;
+        box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn-newspaper:hover {
+        @apply bg-black text-white;
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn-newspaper:active {
+        transform: translate(0px, 0px);
+        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Card Styles */
+    .card-newspaper {
+        @apply bg-white border-2 border-black p-6;
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
+        position: relative;
+    }
+
+    .card-newspaper::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: repeating-linear-gradient(45deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px);
+        z-index: -1;
+    }
+
+    /* Input Styles */
+    .input-newspaper {
+        @apply bg-white border-2 border-black px-4 py-3 font-mono;
+        font-family: 'Roboto Mono', monospace;
+        box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-newspaper:focus {
+        @apply outline-none border-primary;
+        box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(0, 50, 40, 0.2);
+    }
+
+    /* Navigation Styles */
+    .nav-newspaper {
+        @apply bg-black text-white border-b-4 border-primary;
+    }
+
+    .nav-link-newspaper {
+        @apply text-white font-bold uppercase tracking-wider px-4 py-2 border-b-2 border-transparent;
+        font-family: 'Roboto Mono', monospace;
+        transition: all 0.2s ease;
+    }
+
+    .nav-link-newspaper:hover {
+        @apply border-primary bg-primary/20;
+    }
+
+    .nav-link-newspaper.active {
+        @apply border-primary bg-primary/20;
     }
 }
