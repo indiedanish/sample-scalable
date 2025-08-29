@@ -7,7 +7,17 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { CreateCreatorModal } from "@/features/users/components/CreateCreatorModal";
-import { Users, Plus, Crown, Video, User, Mail, Calendar } from "lucide-react";
+import {
+  Users,
+  Plus,
+  Crown,
+  Video,
+  User,
+  Mail,
+  Calendar,
+  Leaf,
+  Sparkles,
+} from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
 export function UsersPage() {
@@ -106,6 +116,19 @@ export function UsersPage() {
     }
   };
 
+  const getRoleColor = (role) => {
+    switch (role) {
+      case "ADMIN":
+        return "bg-eco-leaf/20 text-eco-leaf border-eco-leaf/30";
+      case "CREATOR":
+        return "bg-eco-earth/20 text-eco-earth border-eco-earth/30";
+      case "CONSUMER":
+        return "bg-eco-sage/20 text-eco-sage border-eco-sage/30";
+      default:
+        return "bg-eco-sage/20 text-eco-sage border-eco-sage/30";
+    }
+  };
+
   if (!hasRole("ADMIN")) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -125,129 +148,104 @@ export function UsersPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              User Management
-            </h1>
-            <p className="text-gray-600 mt-2">
-              Manage platform users and create creator accounts
-            </p>
+      <div className="text-center mb-10">
+        <div className="relative inline-block mb-6">
+          <div className="w-20 h-20 bg-eco-leaf/10 rounded-full flex items-center justify-center mb-4 mx-auto">
+            <Users className="h-10 w-10 text-eco-leaf" />
           </div>
-          <Button onClick={() => setShowCreateModal(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Create Creator
-          </Button>
+          <Leaf className="h-6 w-6 text-eco-sage absolute -top-2 -right-2 animate-float" />
+          <Sparkles className="h-4 w-4 text-eco-earth absolute -bottom-1 -left-1 animate-pulse" />
         </div>
+        <h1 className="font-eco text-4xl font-bold text-eco-forest mb-3">
+          Community Management
+        </h1>
+        <p className="text-eco-forest/70 text-lg font-medium max-w-2xl mx-auto">
+          Manage user accounts and oversee the growth of our creative community
+        </p>
+        <div className="leaf-divider mt-6"></div>
       </div>
 
-      {/* User Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{users.length}</div>
-            <p className="text-xs text-muted-foreground">Registered users</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Creators</CardTitle>
-            <Video className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {users.filter((u) => u.role === "CREATOR").length}
-            </div>
-            <p className="text-xs text-muted-foreground">Content creators</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Consumers</CardTitle>
-            <User className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {users.filter((u) => u.role === "CONSUMER").length}
-            </div>
-            <p className="text-xs text-muted-foreground">Regular users</p>
-          </CardContent>
-        </Card>
+      {/* Actions */}
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="font-eco text-2xl font-semibold text-eco-forest">
+            Users
+          </h2>
+          <p className="text-eco-forest/70">Total: {users.length} users</p>
+        </div>
+        <Button
+          onClick={() => setShowCreateModal(true)}
+          className="btn-eco flex items-center space-x-2"
+        >
+          <Plus className="h-4 w-4" />
+          <span>Create Creator</span>
+        </Button>
       </div>
 
-      {/* Users List */}
-      <Card>
-        <CardHeader>
-          <CardTitle>All Users</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {loading ? (
-            <div className="flex items-center justify-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            </div>
-          ) : users.length === 0 ? (
-            <div className="text-center py-8">
-              <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-500">No users found</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {users.map((userData) => (
-                <div
-                  key={userData.id}
-                  className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+      {/* Users Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {users.map((user) => (
+          <Card
+            key={user.id}
+            className="card-eco border-eco-sage/20 hover:shadow-eco-lg transition-all duration-300 group"
+          >
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between">
+                <Avatar className="h-12 w-12 ring-2 ring-eco-sage/20 group-hover:ring-eco-leaf/30 transition-all duration-300">
+                  <AvatarFallback className="bg-gradient-to-br from-eco-leaf to-eco-moss text-white font-semibold">
+                    {getInitials(user.firstName, user.lastName)}
+                  </AvatarFallback>
+                </Avatar>
+                <Badge
+                  variant={getRoleVariant(user.role)}
+                  className={`${getRoleColor(
+                    user.role
+                  )} text-xs px-3 py-1.5 rounded-full font-medium border`}
                 >
-                  <div className="flex items-center space-x-4">
-                    <Avatar className="h-10 w-10">
-                      <AvatarFallback className="bg-gray-200 text-gray-700">
-                        {getInitials(userData.firstName, userData.lastName)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="font-medium text-gray-900">
-                        {userData.firstName} {userData.lastName}
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-500">
-                        <Mail className="h-3 w-3" />
-                        <span>{userData.email}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-500 mt-1">
-                        <Calendar className="h-3 w-3" />
-                        <span>Joined {formatDate(userData.createdAt)}</span>
-                      </div>
-                    </div>
+                  <div className="flex items-center space-x-1">
+                    {getRoleIcon(user.role)}
+                    <span>{user.role}</span>
                   </div>
-
-                  <div className="flex items-center space-x-3">
-                    <Badge
-                      variant={getRoleVariant(userData.role)}
-                      className="flex items-center space-x-1"
-                    >
-                      {getRoleIcon(userData.role)}
-                      <span>{userData.role}</span>
-                    </Badge>
-
-                    <Badge
-                      variant={userData.isActive ? "default" : "destructive"}
-                    >
-                      {userData.isActive ? "Active" : "Inactive"}
-                    </Badge>
-                  </div>
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div>
+                <h3 className="font-semibold text-eco-forest text-lg">
+                  {user.firstName} {user.lastName}
+                </h3>
+                <div className="flex items-center space-x-2 text-eco-forest/70 text-sm">
+                  <Mail className="h-3 w-3" />
+                  <span className="truncate">{user.email}</span>
                 </div>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+              </div>
+
+              <div className="flex items-center space-x-2 text-eco-forest/60 text-xs">
+                <Calendar className="h-3 w-3" />
+                <span>Joined {formatDate(user.createdAt)}</span>
+              </div>
+
+              <div className="pt-2 border-t border-eco-sage/20">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-eco-forest/60">Status</span>
+                  <Badge
+                    variant={user.isActive ? "default" : "secondary"}
+                    className={`text-xs px-2 py-1 rounded-full ${
+                      user.isActive
+                        ? "bg-eco-leaf/20 text-eco-leaf border border-eco-leaf/30"
+                        : "bg-eco-sage/20 text-eco-sage border border-eco-sage/30"
+                    }`}
+                  >
+                    {user.isActive ? "Active" : "Inactive"}
+                  </Badge>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       {/* Create Creator Modal */}
       <CreateCreatorModal

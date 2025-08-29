@@ -2,50 +2,100 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --primary: 221.2 83.2% 53.3%;
-        --primary-foreground: 210 40% 98%;
-        --secondary: 210 40% 96%;
-        --secondary-foreground: 222.2 84% 4.9%;
-        --muted: 210 40% 96%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96%;
-        --accent-foreground: 222.2 84% 4.9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 221.2 83.2% 53.3%;
-        --radius: 0.75rem;
+        /* Eco Theme Colors */
+        --background: 60 9% 98%;
+        /* Light cream */
+        --foreground: 120 3% 15%;
+        /* Soft dark green */
+        --card: 60 9% 98%;
+        /* Light cream */
+        --card-foreground: 120 3% 15%;
+        /* Soft dark green */
+        --popover: 60 9% 98%;
+        /* Light cream */
+        --popover-foreground: 120 3% 15%;
+        /* Soft dark green */
+        --primary: 142 76% 36%;
+        /* Natural green */
+        --primary-foreground: 60 9% 98%;
+        /* Light cream */
+        --secondary: 45 93% 94%;
+        /* Warm yellow */
+        --secondary-foreground: 120 3% 15%;
+        /* Soft dark green */
+        --muted: 60 9% 96%;
+        /* Very light cream */
+        --muted-foreground: 120 3% 25%;
+        /* Medium green */
+        --accent: 35 91% 70%;
+        /* Earthy brown */
+        --accent-foreground: 120 3% 15%;
+        /* Soft dark green */
+        --destructive: 0 84% 60%;
+        /* Keep red for errors */
+        --destructive-foreground: 60 9% 98%;
+        /* Light cream */
+        --border: 60 9% 90%;
+        /* Light cream border */
+        --input: 60 9% 96%;
+        /* Very light cream */
+        --ring: 142 76% 36%;
+        /* Natural green */
+        --radius: 1rem;
+        /* Increased border radius for softer look */
+
+        /* Additional eco theme colors */
+        --success: 142 76% 36%;
+        /* Natural green */
+        --warning: 45 93% 70%;
+        /* Warm yellow */
+        --info: 200 98% 70%;
+        /* Sky blue */
     }
 
     .dark {
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
-        --primary: 217.2 91.2% 59.8%;
-        --primary-foreground: 222.2 84% 4.9%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 224.3 76.3% 94.1%;
+        --background: 120 3% 8%;
+        /* Dark green */
+        --foreground: 60 9% 98%;
+        /* Light cream */
+        --card: 120 3% 12%;
+        /* Medium dark green */
+        --card-foreground: 60 9% 98%;
+        /* Light cream */
+        --popover: 120 3% 12%;
+        /* Medium dark green */
+        --popover-foreground: 60 9% 98%;
+        /* Light cream */
+        --primary: 142 76% 50%;
+        /* Brighter green for dark mode */
+        --primary-foreground: 120 3% 8%;
+        /* Dark green */
+        --secondary: 35 91% 60%;
+        /* Earthy brown */
+        --secondary-foreground: 60 9% 98%;
+        /* Light cream */
+        --muted: 120 3% 15%;
+        /* Medium green */
+        --muted-foreground: 60 9% 80%;
+        /* Medium cream */
+        --accent: 45 93% 60%;
+        /* Warm yellow */
+        --accent-foreground: 120 3% 8%;
+        /* Dark green */
+        --destructive: 0 84% 60%;
+        /* Keep red for errors */
+        --destructive-foreground: 60 9% 98%;
+        /* Light cream */
+        --border: 120 3% 20%;
+        /* Medium green border */
+        --input: 120 3% 15%;
+        /* Medium green */
+        --ring: 142 76% 50%;
+        /* Brighter green */
     }
 }
 
@@ -56,5 +106,73 @@
 
     body {
         @apply bg-background text-foreground;
+        font-family: 'Quicksand', sans-serif;
+        line-height: 1.6;
+    }
+
+    /* Eco theme typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+    }
+
+    /* Smooth transitions for all interactive elements */
+    * {
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-muted;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-primary/30 rounded-full;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        @apply bg-primary/50;
+    }
+}
+
+@layer components {
+
+    /* Eco theme button styles */
+    .btn-eco {
+        @apply bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+    }
+
+    .btn-eco-secondary {
+        @apply bg-gradient-to-r from-secondary to-secondary/80 hover:from-secondary/90 hover:to-secondary/70 text-secondary-foreground font-medium py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+    }
+
+    /* Eco theme card styles */
+    .card-eco {
+        @apply bg-card/80 backdrop-blur-sm border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300;
+    }
+
+    /* Eco theme input styles */
+    .input-eco {
+        @apply bg-input border border-border/50 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300;
+    }
+
+    /* Leaf accent divider */
+    .leaf-divider {
+        @apply relative;
+    }
+
+    .leaf-divider::after {
+        content: '🍃';
+        @apply absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-2xl opacity-60;
     }
 }

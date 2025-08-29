@@ -12,6 +12,8 @@ import {
   ChevronLeft,
   ChevronRight,
   SlidersHorizontal,
+  Leaf,
+  Sparkles,
 } from "lucide-react";
 
 export function VideosPage() {
@@ -99,153 +101,159 @@ export function VideosPage() {
       startDate: "",
       endDate: "",
     });
-    setSearchParams(new URLSearchParams({ page: "1", limit: "12" }));
+    setSearchParams({});
   };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="relative">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-eco-leaf"></div>
+          <Leaf className="h-6 w-6 text-eco-sage absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Videos</h1>
-        <p className="text-gray-600 mt-2">
-          Discover and watch amazing content from our creators
+      <div className="text-center mb-10">
+        <div className="relative inline-block mb-4">
+          <h1 className="font-eco text-4xl font-bold text-eco-forest">
+            Discover Amazing Videos 🌿
+          </h1>
+          <Sparkles className="h-5 w-5 text-eco-earth absolute -top-2 -right-8 animate-pulse" />
+        </div>
+        <p className="text-eco-forest/70 text-lg font-medium max-w-2xl mx-auto">
+          Explore a world of creative content from talented creators around the
+          globe
         </p>
+        <div className="leaf-divider mt-6"></div>
       </div>
 
       {/* Search and Filters */}
-      <div className="space-y-4 mb-8">
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} className="flex gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search videos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Button type="submit">Search</Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-2"
-          >
-            <SlidersHorizontal className="h-4 w-4" />
-            <span>Filters</span>
-          </Button>
-        </form>
+      <div className="mb-8">
+        <Card className="card-eco border-eco-sage/20 shadow-eco">
+          <CardContent className="p-6">
+            <div className="flex flex-col lg:flex-row gap-4 items-center">
+              {/* Search */}
+              <div className="flex-1 w-full lg:w-auto">
+                <form onSubmit={handleSearch} className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <Search className="h-4 w-4 text-eco-sage" />
+                  </div>
+                  <Input
+                    type="text"
+                    placeholder="Search videos..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="input-eco pl-12 pr-4 w-full"
+                  />
+                </form>
+              </div>
 
-        {/* Advanced Filters */}
-        {showFilters && (
-          <Card>
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Min Duration (seconds)
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="0"
-                    value={filters.minDuration}
-                    onChange={(e) =>
-                      setFilters({ ...filters, minDuration: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Max Duration (seconds)
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="3600"
-                    value={filters.maxDuration}
-                    onChange={(e) =>
-                      setFilters({ ...filters, maxDuration: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Start Date
-                  </label>
-                  <Input
-                    type="date"
-                    value={filters.startDate}
-                    onChange={(e) =>
-                      setFilters({ ...filters, startDate: e.target.value })
-                    }
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    End Date
-                  </label>
-                  <Input
-                    type="date"
-                    value={filters.endDate}
-                    onChange={(e) =>
-                      setFilters({ ...filters, endDate: e.target.value })
-                    }
-                  />
+              {/* Filter Toggle */}
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className="btn-eco-secondary flex items-center space-x-2"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                <span>Filters</span>
+              </Button>
+
+              {/* Clear Filters */}
+              {Object.values(filters).some(
+                (value) => value && value !== "" && value !== 1 && value !== 12
+              ) && (
+                <Button
+                  variant="ghost"
+                  onClick={clearFilters}
+                  className="text-eco-forest/70 hover:text-eco-leaf hover:bg-eco-sage/10"
+                >
+                  Clear All
+                </Button>
+              )}
+            </div>
+
+            {/* Advanced Filters */}
+            {showFilters && (
+              <div className="mt-6 pt-6 border-t border-eco-sage/20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-eco-forest">
+                      Min Duration (min)
+                    </label>
+                    <Input
+                      type="number"
+                      placeholder="0"
+                      value={filters.minDuration}
+                      onChange={(e) =>
+                        updateFilters({ minDuration: e.target.value })
+                      }
+                      className="input-eco"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-eco-forest">
+                      Max Duration (min)
+                    </label>
+                    <Input
+                      type="number"
+                      placeholder="∞"
+                      value={filters.maxDuration}
+                      onChange={(e) =>
+                        updateFilters({ maxDuration: e.target.value })
+                      }
+                      className="input-eco"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-eco-forest">
+                      Start Date
+                    </label>
+                    <Input
+                      type="date"
+                      value={filters.startDate}
+                      onChange={(e) =>
+                        updateFilters({ startDate: e.target.value })
+                      }
+                      className="input-eco"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-eco-forest">
+                      End Date
+                    </label>
+                    <Input
+                      type="date"
+                      value={filters.endDate}
+                      onChange={(e) =>
+                        updateFilters({ endDate: e.target.value })
+                      }
+                      className="input-eco"
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="flex justify-between mt-4">
-                <Button variant="outline" onClick={clearFilters}>
-                  Clear Filters
-                </Button>
-                <Button onClick={() => updateFilters(filters)}>
-                  Apply Filters
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-
-      {/* Results */}
-      {loading ? (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        </div>
-      ) : error ? (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-600">{error}</p>
-        </div>
-      ) : videos.length === 0 ? (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Video className="h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No videos found
-            </h3>
-            <p className="text-gray-500 text-center">
-              {filters.search
-                ? `No videos found matching "${filters.search}"`
-                : "No videos match your current filters"}
-            </p>
+            )}
           </CardContent>
         </Card>
-      ) : (
-        <>
-          {/* Results count */}
-          <div className="mb-6">
-            <p className="text-sm text-gray-600">
-              Showing {videos.length} of {pagination?.total || 0} videos
-              {filters.search && (
-                <span>
-                  {" "}
-                  for "<strong>{filters.search}</strong>"
-                </span>
-              )}
-            </p>
-          </div>
+      </div>
 
-          {/* Video Grid */}
+      {/* Error Message */}
+      {error && (
+        <Card className="card-eco border-destructive/20 mb-6">
+          <CardContent className="p-4">
+            <p className="text-destructive font-medium">{error}</p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Videos Grid */}
+      {videos.length > 0 ? (
+        <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
             {videos.map((video) => (
               <VideoCard key={video.id} video={video} />
@@ -253,41 +261,27 @@ export function VideosPage() {
           </div>
 
           {/* Pagination */}
-          {pagination && pagination.pages > 1 && (
+          {pagination && pagination.totalPages > 1 && (
             <div className="flex items-center justify-center space-x-2">
               <Button
                 variant="outline"
-                onClick={() => handlePageChange(pagination.current - 1)}
-                disabled={pagination.current <= 1}
+                onClick={() => handlePageChange(pagination.currentPage - 1)}
+                disabled={pagination.currentPage === 1}
+                className="btn-eco-secondary"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 Previous
               </Button>
 
-              <div className="flex items-center space-x-1">
-                {[...Array(Math.min(5, pagination.pages))].map((_, i) => {
-                  const pageNum = Math.max(1, pagination.current - 2) + i;
-                  if (pageNum > pagination.pages) return null;
-
-                  return (
-                    <Button
-                      key={pageNum}
-                      variant={
-                        pageNum === pagination.current ? "default" : "outline"
-                      }
-                      size="sm"
-                      onClick={() => handlePageChange(pageNum)}
-                    >
-                      {pageNum}
-                    </Button>
-                  );
-                })}
-              </div>
+              <span className="text-eco-forest/70 font-medium">
+                Page {pagination.currentPage} of {pagination.totalPages}
+              </span>
 
               <Button
                 variant="outline"
-                onClick={() => handlePageChange(pagination.current + 1)}
-                disabled={pagination.current >= pagination.pages}
+                onClick={() => handlePageChange(pagination.currentPage + 1)}
+                disabled={pagination.currentPage === pagination.totalPages}
+                className="btn-eco-secondary"
               >
                 Next
                 <ChevronRight className="h-4 w-4 ml-1" />
@@ -295,6 +289,31 @@ export function VideosPage() {
             </div>
           )}
         </>
+      ) : (
+        <Card className="card-eco border-eco-sage/20 text-center py-16">
+          <CardContent>
+            <Video className="h-20 w-20 text-eco-sage/50 mx-auto mb-6" />
+            <h3 className="text-2xl font-medium text-eco-forest/70 mb-3">
+              No videos found
+            </h3>
+            <p className="text-eco-forest/60 max-w-md mx-auto">
+              {searchTerm ||
+              Object.values(filters).some(
+                (value) => value && value !== "" && value !== 1 && value !== 12
+              )
+                ? "Try adjusting your search criteria or filters to find more videos."
+                : "No videos have been uploaded yet. Check back soon!"}
+            </p>
+            {(searchTerm ||
+              Object.values(filters).some(
+                (value) => value && value !== "" && value !== 1 && value !== 12
+              )) && (
+              <Button onClick={clearFilters} className="btn-eco mt-4">
+                Clear Filters
+              </Button>
+            )}
+          </CardContent>
+        </Card>
       )}
     </div>
   );
